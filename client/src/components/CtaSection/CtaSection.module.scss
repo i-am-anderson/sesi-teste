@@ -1,0 +1,57 @@
+@use '../../styles/theme' as *;
+
+.section {
+  padding-bottom: 56px;
+  color: $color-white;
+  background: $color-red-900;
+  border-top: 1px solid rgba($color-primary, 0.5);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 40px;
+  align-items: start;
+
+  @include down($bp-md) {
+    grid-template-columns: 1fr;
+    padding-top: 40px;
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title {
+  font-size: clamp(32px, 3.6vw, 44px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.description {
+  margin: 16px 0 24px;
+  font-size: 18px;
+  line-height: 1.45;
+}
+
+.media {
+  display: block;
+  overflow: hidden;
+  border-radius: 0 0 $radius-md $radius-md;
+  aspect-ratio: 16 / 9;
+  @include focus-ring;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @include down($bp-md) {
+    border-radius: $radius-md;
+  }
+}

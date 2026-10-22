@@ -1,0 +1,36 @@
+@use '../../styles/theme' as *;
+
+.nav {
+  display: flex;
+  gap: 8px;
+}
+
+.dark {
+  color: $color-ink;
+}
+
+.light {
+  color: $color-white;
+}
+
+.button {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  transition: opacity $transition, background-color $transition;
+  @include focus-ring;
+
+  &:hover:not(:disabled) {
+    background: rgba(128, 128, 128, 0.14);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+}

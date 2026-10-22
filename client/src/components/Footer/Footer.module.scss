@@ -1,0 +1,93 @@
+@use '../../styles/theme' as *;
+
+.footer {
+  padding: 56px 0 40px;
+  color: $color-white;
+  background: $color-red-950;
+}
+
+.top {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px 24px;
+
+  @include down($bp-md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include down($bp-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.contact {
+  font-size: 14px;
+  line-height: 1.4;
+
+  &:first-of-type {
+    margin-top: 20px;
+  }
+
+  & + & {
+    margin-top: 8px;
+  }
+}
+
+.columnTitle {
+  margin-bottom: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.link {
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgba($color-white, 0.6);
+  transition: color $transition;
+  @include focus-ring;
+
+  &:hover {
+    color: $color-white;
+  }
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 72px;
+}
+
+.copy {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba($color-white, 0.6);
+}
+
+.socials {
+  display: flex;
+  gap: 16px;
+}
+
+.social {
+  display: block;
+  @include focus-ring;
+}
