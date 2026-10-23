@@ -1,0 +1,27 @@
+@use '../../styles/theme' as *;
+
+.carousel {
+  width: 100%;
+}
+
+.swiper {
+  // espaço para as sombras dos cards não serem cortadas
+  padding-block: 24px;
+  margin-block: -24px;
+}
+
+.slide {
+  width: var(--slide-w);
+  height: auto;
+
+  @include down($bp-sm) {
+    width: min(var(--slide-w), 80vw);
+  }
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+}

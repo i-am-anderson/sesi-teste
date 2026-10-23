@@ -1,0 +1,45 @@
+// ---- Layout (sincronizar com src/config/layout.js)
+$container-max: 1212px;
+$gutter: 24px;
+
+// ---- Cores
+$color-primary: #e30513;
+$color-hero: #a8232a;
+$color-red-700: #c1202b;
+$color-red-900: #8f0000;
+$color-red-950: #240000;
+$color-ink: #0c0c0d;
+$color-muted: #5c5c5f;
+$color-line: #d9d9d9;
+$color-white: #fff;
+
+// ---- Tipografia
+$font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+// ---- Raios / transições
+$radius-sm: 4px;
+$radius-md: 8px;
+$transition: 0.25s ease;
+
+// ---- Breakpoints (desktop-first)
+$bp-lg: 1024px;
+$bp-md: 768px;
+$bp-sm: 560px;
+
+@mixin down($bp) {
+  @media (max-width: #{$bp - 1px}) {
+    @content;
+  }
+}
+
+@mixin container {
+  width: min(100% - #{$gutter * 2}, #{$container-max});
+  margin-inline: auto;
+}
+
+@mixin focus-ring($color: currentColor) {
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: 3px;
+  }
+}

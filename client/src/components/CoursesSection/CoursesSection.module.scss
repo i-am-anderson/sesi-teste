@@ -1,0 +1,9 @@
+@use '../../styles/theme' as *;
+
+.section {
+  padding: 72px 0 56px;
+
+  > :first-child {
+    margin-bottom: 40px;
+  }
+}
