@@ -15,3 +15,4 @@ export { default as TestimonialCard } from "./TestimonialCard/TestimonialCard";
 export { default as TestimonialsSection } from "./TestimonialsSection/TestimonialsSection";
 export { default as CtaSection } from "./CtaSection/CtaSection";
 export { default as Footer } from "./Footer/Footer";
+export { default as NotFound } from "./NotFound/NotFound";
