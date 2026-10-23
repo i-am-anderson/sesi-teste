@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyApi.Shared.Data;
+using SesiTeste.Shared.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -25,7 +25,7 @@ namespace SesiTeste.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("MyApi.Modules.Courses.Category", b =>
+            modelBuilder.Entity("SesiTeste.Modules.Courses.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,7 +46,7 @@ namespace SesiTeste.Migrations
                     b.ToTable("categories", (string)null);
                 });
 
-            modelBuilder.Entity("MyApi.Modules.Courses.Course", b =>
+            modelBuilder.Entity("SesiTeste.Modules.Courses.Course", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -105,7 +105,7 @@ namespace SesiTeste.Migrations
                     b.ToTable("courses", (string)null);
                 });
 
-            modelBuilder.Entity("MyApi.Modules.Courses.Lesson", b =>
+            modelBuilder.Entity("SesiTeste.Modules.Courses.Lesson", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -139,7 +139,7 @@ namespace SesiTeste.Migrations
                     b.ToTable("lessons", (string)null);
                 });
 
-            modelBuilder.Entity("MyApi.Modules.Courses.Topic", b =>
+            modelBuilder.Entity("SesiTeste.Modules.Courses.Topic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -169,9 +169,9 @@ namespace SesiTeste.Migrations
                     b.ToTable("topics", (string)null);
                 });
 
-            modelBuilder.Entity("MyApi.Modules.Courses.Course", b =>
+            modelBuilder.Entity("SesiTeste.Modules.Courses.Course", b =>
                 {
-                    b.HasOne("MyApi.Modules.Courses.Category", "Category")
+                    b.HasOne("SesiTeste.Modules.Courses.Category", "Category")
                         .WithMany("Courses")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -180,9 +180,9 @@ namespace SesiTeste.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("MyApi.Modules.Courses.Lesson", b =>
+            modelBuilder.Entity("SesiTeste.Modules.Courses.Lesson", b =>
                 {
-                    b.HasOne("MyApi.Modules.Courses.Topic", "Topic")
+                    b.HasOne("SesiTeste.Modules.Courses.Topic", "Topic")
                         .WithMany("Lessons")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -191,9 +191,9 @@ namespace SesiTeste.Migrations
                     b.Navigation("Topic");
                 });
 
-            modelBuilder.Entity("MyApi.Modules.Courses.Topic", b =>
+            modelBuilder.Entity("SesiTeste.Modules.Courses.Topic", b =>
                 {
-                    b.HasOne("MyApi.Modules.Courses.Course", "Course")
+                    b.HasOne("SesiTeste.Modules.Courses.Course", "Course")
                         .WithMany("Topics")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -202,17 +202,17 @@ namespace SesiTeste.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("MyApi.Modules.Courses.Category", b =>
+            modelBuilder.Entity("SesiTeste.Modules.Courses.Category", b =>
                 {
                     b.Navigation("Courses");
                 });
 
-            modelBuilder.Entity("MyApi.Modules.Courses.Course", b =>
+            modelBuilder.Entity("SesiTeste.Modules.Courses.Course", b =>
                 {
                     b.Navigation("Topics");
                 });
 
-            modelBuilder.Entity("MyApi.Modules.Courses.Topic", b =>
+            modelBuilder.Entity("SesiTeste.Modules.Courses.Topic", b =>
                 {
                     b.Navigation("Lessons");
                 });

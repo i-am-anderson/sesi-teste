@@ -1,6 +1,6 @@
 @SesiTeste_HostAddress = http://localhost:5116
 
-GET {{SesiTeste_HostAddress}}/weatherforecast/
+GET {{SesiTeste_HostAddress}}/health/
 Accept: application/json
 
 ###

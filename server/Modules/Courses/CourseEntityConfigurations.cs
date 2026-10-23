@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace MyApi.Modules.Courses;
+namespace SesiTeste.Modules.Courses;
 
 public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {

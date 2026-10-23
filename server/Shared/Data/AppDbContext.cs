@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using MyApi.Modules.Courses;
+using SesiTeste.Modules.Courses;
 
-namespace MyApi.Shared.Data;
+namespace SesiTeste.Shared.Data;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {

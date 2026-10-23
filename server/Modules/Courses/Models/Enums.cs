@@ -1,4 +1,4 @@
-namespace MyApi.Modules.Courses;
+namespace SesiTeste.Modules.Courses;
 
 public enum Modality
 {
