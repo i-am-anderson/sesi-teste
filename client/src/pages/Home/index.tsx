@@ -6,9 +6,9 @@ import {
   TestimonialsSection,
   CtaSection,
   Footer,
-} from "./components";
+} from "../../components";
 
-export default function App() {
+export default function HomePage() {
   return (
     <>
       <Header />

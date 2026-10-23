@@ -1,0 +1,43 @@
+@use '../../styles/theme' as *;
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  min-height: 636px;
+  padding: 120px 0 72px;
+  color: $color-white;
+  background: $color-hero;
+
+  @include down($bp-md) {
+    min-height: 540px;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.code {
+  font-size: clamp(88px, 14vw, 160px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  opacity: 0.35;
+}
+
+.title {
+  margin-top: 8px;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.description {
+  max-width: 480px;
+  margin: 16px 0 24px;
+  font-size: 18px;
+  line-height: 1.45;
+}
