@@ -5,6 +5,7 @@ namespace SesiTeste.Modules.Courses;
 
 public class CourseService(AppDbContext db) : ICourseService
 {
+  // Método para obter a lista de cursos com filtros e paginação
   public async Task<CourseListResponse> GetAllAsync(CourseQuery q)
   {
     var query = db.Courses.AsNoTracking().AsQueryable();
@@ -38,5 +39,39 @@ public class CourseService(AppDbContext db) : ICourseService
     var totalPages = (int)Math.Ceiling(total / (double)q.PageSize);
 
     return new CourseListResponse(total, q.Page, q.PageSize, totalPages, items);
+  }
+
+  // Método para obter detalhes de um curso específico por ID
+  public async Task<CourseDetailDto?> GetByIdAsync(int id) =>
+    await db.Courses
+        .AsNoTracking()
+        .Where(c => c.Id == id)
+        .Select(c => new CourseDetailDto(
+            c.Id, c.FullName, c.ShortName, c.Description,
+            new CategoryDto(c.Category.Id, c.Category.Name),
+            c.Modality, c.WorkloadHours, c.TargetAudience,
+            c.Status, c.ImageUrl, c.AvailableFrom,
+            c.Topics.OrderBy(t => t.Order)
+                .Select(t => new TopicDto(
+                    t.Id, t.Order, t.Title, t.Description,
+                    t.Lessons.OrderBy(l => l.Order)
+                        .Select(l => new LessonDto(l.Id, l.Order, l.Title, l.Description, l.DurationMinutes))
+                        .ToList()))
+                .ToList()))
+        .FirstOrDefaultAsync();
+
+  // Método para obter filtros disponíveis para cursos
+  public async Task<CourseFiltersDto> GetFiltersAsync()
+  {
+    var categories = await db.Categories
+        .AsNoTracking()
+        .OrderBy(c => c.Name)
+        .Select(c => new CategoryDto(c.Id, c.Name))
+        .ToListAsync();
+
+    return new CourseFiltersDto(
+        categories,
+        Enum.GetNames<Modality>(),
+        Enum.GetNames<CourseStatus>());
   }
 }
