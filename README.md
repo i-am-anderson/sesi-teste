@@ -83,6 +83,7 @@ erDiagram
         int id PK
         string fullName
         string shortName
+        string slug UK
         string description
         int categoryId FK
         Modality modality
