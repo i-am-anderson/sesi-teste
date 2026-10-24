@@ -14,6 +14,24 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
+builder.Services.AddCoursesModule();
+
+// CORS (https://learn-microsoft-com.translate.goog/en-us/aspnet/core/security/cors?view=aspnetcore-10.0&_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt&_x_tr_pto=tc)
+var allowedOrigins = builder.Configuration
+    .GetSection("Cors:AllowedOrigins")
+    .Get<string[]>() ?? [];
+
+builder.Services.AddCors(options =>
+    options.AddDefaultPolicy(policy =>
+    {
+        if (allowedOrigins.Length > 0)
+        {
+            policy.WithOrigins(allowedOrigins)
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        }
+    }));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -29,6 +47,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors();
 app.MapControllers();
 
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));

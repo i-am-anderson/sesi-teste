@@ -41,7 +41,10 @@ export default function Carousel<T>({
     setEdges({ begin: Boolean(s.isBeginning), end: Boolean(s.isEnd) });
 
   return (
-    <div className={styles.carousel} style={{ "--slide-w": `${slideWidth}px` }}>
+    <div
+      className={styles.carousel}
+      style={{ "--slide-w": `${slideWidth}px` } as React.CSSProperties}
+    >
       <Swiper
         className={styles.swiper}
         slidesPerView="auto"
