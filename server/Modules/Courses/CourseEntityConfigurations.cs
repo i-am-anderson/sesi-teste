@@ -20,6 +20,8 @@ public class CourseConfiguration : IEntityTypeConfiguration<Course>
     e.ToTable("courses");
     e.Property(x => x.FullName).IsRequired().HasMaxLength(150);
     e.Property(x => x.ShortName).IsRequired().HasMaxLength(60);
+    e.Property(x => x.Slug).IsRequired().HasMaxLength(120);
+    e.HasIndex(x => x.Slug).IsUnique();
     e.Property(x => x.Description).IsRequired().HasMaxLength(2000);
     e.Property(x => x.TargetAudience).IsRequired().HasMaxLength(300);
     e.Property(x => x.ImageUrl).IsRequired().HasMaxLength(500);

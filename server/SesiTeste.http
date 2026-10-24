@@ -27,3 +27,6 @@ GET {{SesiTeste_HostAddress}}/api/courses/1
 
 ### Retorna os filtros disponíveis para cursos (categorias, modalidades e status)
 GET {{SesiTeste_HostAddress}}/api/courses/filters
+
+### Retorna o curso pelo Slug
+GET {{SesiTeste_HostAddress}}/api/courses/quimica-geral-organica
