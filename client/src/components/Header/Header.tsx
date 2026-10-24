@@ -5,16 +5,20 @@ import { navigation, studentArea } from "../../data/navigation";
 import logoWhite from "../../assets/icons/logo-sesi-industria-white.svg";
 import logoPrimary from "../../assets/icons/logo-sesi-industria-primary.svg";
 import styles from "./Header.module.scss";
+import { Link } from "react-router-dom";
 
-export default function Header() {
-  // Transparente no topo, ao scrollar fica branco
-  const scrolled = useScrolled(0);
+type HeaderProps = {
+  solid?: boolean;
+};
+
+export default function Header({ solid = false }: HeaderProps) {
+  const scrolled = useScrolled(0) || solid;
 
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
       <Container className={styles.inner}>
-        <a
-          href="#"
+        <Link
+          to="/"
           className={styles.logo}
           aria-label="SESI Indústria - página inicial"
         >
@@ -24,15 +28,15 @@ export default function Header() {
             width="188"
             height="19"
           />
-        </a>
+        </Link>
 
         <nav className={styles.nav} aria-label="Principal">
           <ul className={styles.links}>
             {navigation.map((item) => (
               <li key={item.label}>
-                <a href={item.href} className={styles.link}>
+                <Link to={item.href} className={styles.link}>
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

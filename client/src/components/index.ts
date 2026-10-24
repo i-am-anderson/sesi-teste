@@ -16,3 +16,17 @@ export { default as TestimonialsSection } from "./TestimonialsSection/Testimonia
 export { default as CtaSection } from "./CtaSection/CtaSection";
 export { default as Footer } from "./Footer/Footer";
 export { default as NotFound } from "./NotFound/NotFound";
+export { default as CategoryTag } from "./CategoryTag/CategoryTag";
+export { default as CourseHero } from "./CourseHero/CourseHero";
+export { default as CourseFeatures } from "./CourseFeatures/CourseFeatures";
+export { default as Accordion } from "./Accordion/Accordion";
+export { default as AccordionSection } from "./AccordionSection/AccordionSection";
+export {
+  ModulesList,
+  TextSections,
+  FaqList,
+} from "./CourseContent/CourseContent";
+export { default as EnrollBar } from "./EnrollBar/EnrollBar";
+export { default as ContactCtaSection } from "./ContactCtaSection/ContactCtaSection";
+export { default as FeatureList } from "./FeatureList/FeatureList";
+export { default as VLibras } from "./VLibras/VLibras";

@@ -4,7 +4,7 @@ import styles from "./Button.module.scss";
 
 interface ButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href?: string;
-  variant?: "light" | "outline" | "outlineLight";
+  variant?: "light" | "dark" | "outline" | "outlineLight";
   size?: "md" | "sm";
   withArrow?: boolean;
   className?: string;

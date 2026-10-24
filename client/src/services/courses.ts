@@ -6,6 +6,7 @@ async function get<T>(path: string): Promise<T> {
   return response.json() as Promise<T>;
 }
 
+// Todos os cursos disponíveis, paginados
 export type CourseDto = {
   id: number;
   fullName: string;
@@ -32,4 +33,27 @@ export function getCourses(pageSize = 12, page = 1) {
   return get<PagedResponse<CourseDto>>(
     `/api/courses?pageSize=${pageSize}&page=${page}`,
   );
+}
+
+// Detalhes de um curso específico, incluindo tópicos e aulas
+export type LessonDto = {
+  id: number;
+  order: number;
+  title: string;
+  description: string | null;
+  durationMinutes: number;
+};
+
+export type TopicDto = {
+  id: number;
+  order: number;
+  title: string;
+  description: string | null;
+  lessons: LessonDto[];
+};
+
+export type CourseDetailDto = CourseDto & { topics: TopicDto[] };
+
+export function getCourse(id: number) {
+  return get<CourseDetailDto>(`/api/courses/${id}`);
 }

@@ -11,3 +11,9 @@ export const categories = {
   matematica: { label: "Matemática", icon: iconMatematica, color: "#FCD19C" },
   linguagens: { label: "Linguagens", icon: iconLinguagens, color: "#CFE3FA" },
 };
+
+export const categoryById: Record<number, keyof typeof categories> = {
+  1: "natureza",
+  2: "matematica",
+  3: "linguagens",
+};

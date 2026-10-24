@@ -1,0 +1,71 @@
+@use '../../styles/theme' as *;
+
+.item {
+  border-top: 1px solid $color-line;
+
+  &:first-child {
+    border-top: 0;
+  }
+}
+
+.heading {
+  margin: 0;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 24px 0 16px;
+  border: 0;
+  background: none;
+  text-align: left;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+  @include focus-ring;
+}
+
+// "–" quando aberto, "+" quando fechado
+.icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 50% 0 auto 0;
+    height: 2px;
+    margin-top: -1px;
+    background: currentColor;
+    transition: transform $transition;
+  }
+
+  &::after {
+    transform: rotate(90deg);
+  }
+}
+
+.iconOpen::after {
+  transform: rotate(0);
+}
+
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows $transition;
+}
+
+.panelOpen {
+  grid-template-rows: 1fr;
+}
+
+.panelInner {
+  min-height: 0;
+  overflow: hidden;
+}
