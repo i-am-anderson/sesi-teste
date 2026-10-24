@@ -16,7 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddCoursesModule();
 
-// CORS
+// CORS (https://learn-microsoft-com.translate.goog/en-us/aspnet/core/security/cors?view=aspnetcore-10.0&_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt&_x_tr_pto=tc)
 var allowedOrigins = builder.Configuration
     .GetSection("Cors:AllowedOrigins")
     .Get<string[]>() ?? [];
