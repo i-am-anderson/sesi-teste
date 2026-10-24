@@ -6,22 +6,9 @@ import Button from "../Button/Button";
 import CourseCard, { type CourseCardProps } from "../CourseCard/CourseCard";
 import CourseCardSkeleton from "../CourseCard/CourseCardSkeleton";
 import AllCoursesCard from "../CourseCard/AllCoursesCard";
-import { getCourses, type CourseDto } from "../../services/courses";
+import { getCourses } from "../../services/courses";
+import { toCourseCardProps } from "../../data/courses";
 import styles from "./CoursesSection.module.scss";
-
-const categoryById: Record<number, CourseCardProps["category"]> = {
-  1: "natureza",
-  2: "matematica",
-  3: "linguagens",
-};
-
-const toCourseCardProps = (course: CourseDto): CourseCardProps => ({
-  title: course.fullName,
-  description: course.description,
-  image: course.imageUrl,
-  category: categoryById[course.category.id],
-  href: `/curso/${course.id}`,
-});
 
 const SKELETON_COUNT = 5;
 const skeletons = Array.from({ length: SKELETON_COUNT }, () => null);
@@ -50,9 +37,9 @@ export default function CoursesSection({
         renderItem={(course) =>
           course ? <CourseCard {...course} /> : <CourseCardSkeleton />
         }
-        extraSlide={<AllCoursesCard href="#" />}
+        extraSlide={<AllCoursesCard href="/cursos" />}
         footerStart={
-          <Button href="#" variant="outline" size="sm">
+          <Button href="/cursos" variant="outline" size="sm">
             Ver todos os cursos
           </Button>
         }

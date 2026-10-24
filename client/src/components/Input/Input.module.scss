@@ -1,0 +1,62 @@
+@use "../../styles/theme" as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.control {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  inset: 0 auto 0 14px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  height: 44px;
+  padding: 0 16px;
+  border: 1px solid $color-ink;
+  border-radius: $radius-sm;
+  font: inherit;
+  font-size: 16px;
+  color: $color-ink;
+  background: $color-white;
+  transition: border-color $transition;
+
+  &::placeholder {
+    color: $color-muted;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+.withIcon {
+  padding-left: 44px;
+}

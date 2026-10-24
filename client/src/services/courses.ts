@@ -29,10 +29,21 @@ export type PagedResponse<T> = {
   items: T[];
 };
 
-export function getCourses(pageSize = 12, page = 1) {
-  return get<PagedResponse<CourseDto>>(
-    `/api/courses?pageSize=${pageSize}&page=${page}`,
-  );
+export function getCourses(
+  pageSize = 12,
+  page = 1,
+  filters: CourseFilters = {},
+) {
+  const params = new URLSearchParams({
+    pageSize: String(pageSize),
+    page: String(page),
+  });
+
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value) params.set(key, value);
+  });
+
+  return get<PagedResponse<CourseDto>>(`/api/courses?${params}`);
 }
 
 // Detalhes de um curso específico, incluindo tópicos e aulas
@@ -56,4 +67,22 @@ export type CourseDetailDto = CourseDto & { topics: TopicDto[] };
 
 export function getCourse(id: number) {
   return get<CourseDetailDto>(`/api/courses/${id}`);
+}
+
+// Filtros disponíveis para cursos
+export type CourseFilters = {
+  search?: string;
+  categoryId?: string;
+  modality?: string;
+  status?: string;
+};
+
+export type CourseFiltersOptions = {
+  categories: { id: number; name: string }[];
+  modalities: CourseDto["modality"][];
+  statuses: CourseDto["status"][];
+};
+
+export function getCourseFilters() {
+  return get<CourseFiltersOptions>("/api/courses/filters");
 }
