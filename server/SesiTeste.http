@@ -1,6 +1,29 @@
 @SesiTeste_HostAddress = http://localhost:5116
 
+### Health Check
 GET {{SesiTeste_HostAddress}}/health/
 Accept: application/json
 
-###
+### Retorna todos os cursos (padrão pageSize=12, page=1)
+GET {{SesiTeste_HostAddress}}/api/courses&pageSize=2&page=1
+
+### Busca cursos por palavra-chave (padrão pageSize=12, page=1)
+GET {{SesiTeste_HostAddress}}/api/courses?search=python&pageSize=2&page=1
+
+### Filtra cursos po modalidade (padrão pageSize=12, page=1)
+GET {{SesiTeste_HostAddress}}/api/courses?modality=Online&pageSize=2&page=1
+
+### Filtra cursos por categoria (padrão pageSize=12, page=1)
+GET {{SesiTeste_HostAddress}}/api/courses?status=ComingSoon&pageSize=2&page=1
+
+### Filtra cursos por categoria (padrão pageSize=12, page=1)
+GET {{SesiTeste_HostAddress}}/api/courses?categoryId=1&pageSize=2&page=1
+
+### Busca cursos por palavra-chave e filtra por modalidade (padrão pageSize=12, page=1)
+GET {{SesiTeste_HostAddress}}/api/courses?search=design&modality=Online&pageSize=2&page=1
+
+### Busca detalhes de um curso específico pelo seu ID
+GET {{SesiTeste_HostAddress}}/api/courses/1
+
+### Retorna os filtros disponíveis para cursos (categorias, modalidades e status)
+GET {{SesiTeste_HostAddress}}/api/courses/filters
