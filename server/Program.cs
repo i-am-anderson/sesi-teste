@@ -16,6 +16,22 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddCoursesModule();
 
+// CORS
+var allowedOrigins = builder.Configuration
+    .GetSection("Cors:AllowedOrigins")
+    .Get<string[]>() ?? [];
+
+builder.Services.AddCors(options =>
+    options.AddDefaultPolicy(policy =>
+    {
+        if (allowedOrigins.Length > 0)
+        {
+            policy.WithOrigins(allowedOrigins)
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        }
+    }));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -31,6 +47,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors();
 app.MapControllers();
 
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
