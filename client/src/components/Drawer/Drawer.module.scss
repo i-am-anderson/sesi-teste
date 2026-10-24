@@ -1,4 +1,4 @@
-@use "../../styles/theme" as *;
+@use '../../styles/theme' as *;
 
 .drawer {
   width: min(400px, 100%);
@@ -64,6 +64,12 @@
   gap: 20px;
   padding: 24px;
   overflow-y: auto;
+}
+
+.flush {
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 .footer {

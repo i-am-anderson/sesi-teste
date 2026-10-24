@@ -42,3 +42,6 @@ export { default as Textarea } from "./Textarea/Textarea";
 export { default as VideoSection } from "./VideoSection/VideoSection";
 export { default as SplitSection } from "./SplitSection/SplitSection";
 export { default as ContactSection } from "./ContactSection/ContactSection";
+export { default as StudyLayout } from "./StudyLayout/StudyLayout";
+export { default as CourseMenu } from "./CourseMenu/CourseMenu";
+export { default as LessonContent } from "./LessonContent/LessonContent";

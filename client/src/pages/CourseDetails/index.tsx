@@ -17,6 +17,8 @@ import {
 import NotFound from "../NotFound";
 import { getCourse } from "../../services/courses";
 import { categoryById } from "../../data/courses";
+import { studyPath } from "../../data/studyContent";
+import { useEnrollment } from "../../hooks/useStudent";
 import { onlineSections, faq } from "../../data/courseInfo";
 import styles from "./CourseDetails.module.scss";
 
@@ -33,6 +35,18 @@ export default function CourseDetailsPage() {
     queryFn: () => getCourse(courseId),
     enabled: Number.isInteger(courseId),
   });
+
+  const enrollment = useEnrollment(courseId);
+
+  const cta = course && {
+    label: enrollment
+      ? "Continuar curso"
+      : course.status === "ComingSoon"
+        ? "Em breve"
+        : "Matricule-se",
+    href: studyPath(course.id),
+    disabled: course.status === "ComingSoon" && !enrollment,
+  };
 
   if (isError || !Number.isInteger(courseId)) return <NotFound />;
 
@@ -55,6 +69,7 @@ export default function CourseDetailsPage() {
               category={categoryById[course.category.id]}
               status={course.status}
               startDate={course.availableFrom}
+              cta={cta}
             />
             <CourseFeatures />
             <AccordionSection
@@ -85,7 +100,7 @@ export default function CourseDetailsPage() {
         )}
       </main>
       <Footer />
-      {course && <EnrollBar title={course.fullName} />}
+      {course && <EnrollBar title={course.fullName} cta={cta} />}
     </>
   );
 }

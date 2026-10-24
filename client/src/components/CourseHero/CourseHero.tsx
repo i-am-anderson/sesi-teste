@@ -13,26 +13,21 @@ type CourseHeroProps = {
   status: CourseDto["status"];
   startDate?: string | null; // "YYYY-MM-DD" (usada só em ComingSoon)
   certification?: string;
-  cta?: { label: string; href: string };
+  cta?: { label: string; href: string; disabled?: boolean };
 };
 
 const formatDate = (iso: string) => iso.split("-").reverse().join("/");
 
 const iconProps = { size: 16, strokeWidth: 1.5, "aria-hidden": true } as const;
 
-function StatusInfo({
-  status,
-  startDate,
-}: Pick<CourseHeroProps, "status" | "startDate">) {
+function StatusInfo({ status, startDate }: Pick<CourseHeroProps, "status" | "startDate">) {
   if (status === "ComingSoon") {
     return (
       <li>
         <Calendar {...iconProps} />
         <span>
           {startDate ? (
-            <>
-              Início do curso: <strong>{formatDate(startDate)}</strong>
-            </>
+            <>Início do curso: <strong>{formatDate(startDate)}</strong></>
           ) : (
             <strong>Em breve</strong>
           )}
@@ -84,9 +79,15 @@ export default function CourseHero({
             </li>
           </ul>
 
-          <Button href={cta.href} variant="dark" withArrow>
-            {cta.label}
-          </Button>
+          {cta.disabled ? (
+            <Button as="button" variant="dark" disabled>
+              {cta.label}
+            </Button>
+          ) : (
+            <Button href={cta.href} variant="dark" withArrow>
+              {cta.label}
+            </Button>
+          )}
         </div>
 
         <img src={image} alt="" className={styles.image} />
