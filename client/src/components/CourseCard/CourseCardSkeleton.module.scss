@@ -1,0 +1,71 @@
+@use "../../styles/theme" as *;
+
+$base: #efeff1;
+$bar: #dedee1;
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  height: 436px; // mesma altura do CourseCard
+  padding: 24px 24px 28px;
+  overflow: hidden;
+  border-radius: $radius-md;
+  background: $base;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba($color-white, 0.6),
+      transparent
+    );
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      animation: none;
+    }
+  }
+}
+
+.tag {
+  position: absolute;
+  top: 24px;
+  left: 20px;
+  width: 140px;
+  height: 24px;
+  border-radius: $radius-sm;
+  background: $bar;
+}
+
+.bar {
+  display: block;
+  border-radius: $radius-sm;
+  background: $bar;
+}
+
+.title {
+  height: 24px;
+}
+
+.text {
+  height: 14px;
+}
+
+.title + .text {
+  margin-top: 8px;
+}
+
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
