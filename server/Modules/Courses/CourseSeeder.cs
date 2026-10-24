@@ -5,164 +5,509 @@ namespace SesiTeste.Modules.Courses;
 
 public static class CourseSeeder
 {
-    public static async Task SeedAsync(AppDbContext db)
+    private const string BannerUrl =
+        "https://res.cloudinary.com/dijfvfciv/image/upload/c_fill,w_800,h_450/v1792796184/banner-ava_zsburk.png";
+
+    public static async Task SeedAsync(AppDbContext db, bool reset = false)
     {
+        if (reset)
+        {
+            await db.Database.ExecuteSqlRawAsync(
+                "TRUNCATE TABLE lessons, topics, courses, categories RESTART IDENTITY CASCADE");
+        }
+
         if (await db.Courses.AnyAsync()) return;
 
-        var tech = new Category { Name = "Tecnologia" };
-        var business = new Category { Name = "Negócios" };
-        var design = new Category { Name = "Design" };
+        var math = new Category { Name = "Matemática" };
+        var nature = new Category { Name = "Ciências da Natureza" };
+        var languages = new Category { Name = "Linguagens" }; // linguagens de programação
 
         db.Courses.AddRange(
+            // ===================== MATEMÁTICA =====================
             new Course
             {
-                FullName = "Desenvolvimento Web com JavaScript Moderno",
-                ShortName = "JavaScript Moderno",
-                Description = "Aprenda a construir páginas interativas com JavaScript, DOM e consumo de APIs.",
-                Category = tech,
+                FullName = "Álgebra Linear Aplicada",
+                ShortName = "Álgebra Linear",
+                Slug = "algebra-linear-aplicada",
+                Description = "Vetores, matrizes, sistemas lineares e autovalores, com foco em aplicações em computação, dados e engenharia.",
+                Category = math,
                 Modality = Modality.Online,
                 WorkloadHours = 60,
-                TargetAudience = "Iniciantes em programação e estudantes de áreas técnicas",
+                TargetAudience = "Estudantes de exatas e engenharia e profissionais de tecnologia que querem base matemática",
                 Status = CourseStatus.Open,
-                ImageUrl = "https://res.cloudinary.com/dijfvfciv/image/upload/c_fill,w_800,h_450/v1792796184/banner-ava_zsburk.png",
-                Topics =
-                [
-                    T(1, "Fundamentos da linguagem",
-                        ("Variáveis e tipos", "Declaração com let e const e os tipos primitivos.", 25),
-                        ("Funções e escopo", "Funções, arrow functions e como o escopo funciona.", 35)),
-                    T(2, "Manipulando o DOM",
-                        ("Selecionando elementos", "Como localizar e alterar elementos da página.", 30),
-                        ("Eventos", "Reagindo a cliques, teclado e formulários.", 40)),
-                    T(3, "Consumindo APIs",
-                        ("Fetch e Promises", "Requisições HTTP e tratamento de respostas.", 45),
-                        ("Async/await na prática", "Código assíncrono legível e tratamento de erros.", 50))
-                ]
+                ImageUrl = BannerUrl,
+                Topics = Topics(
+                    T("Vetores e espaços vetoriais",
+                        ("Vetores no plano e no espaço", "Operações, módulo e interpretação geométrica.", 30),
+                        ("Combinações lineares", "Como gerar vetores a partir de outros.", 35),
+                        ("Dependência e independência linear", "Critérios para identificar bases.", 40)),
+                    T("Matrizes e operações",
+                        ("Tipos de matrizes", "Matriz identidade, diagonal e simétrica.", 25),
+                        ("Soma e multiplicação", "Regras e propriedades das operações.", 40),
+                        ("Matriz inversa", "Condições de existência e cálculo.", 45)),
+                    T("Sistemas lineares",
+                        ("Representação matricial", "Escrevendo sistemas como Ax = b.", 30),
+                        ("Eliminação de Gauss", "Escalonamento passo a passo.", 45),
+                        ("Classificação de sistemas", "Soluções única, infinitas ou inexistentes.", 35)),
+                    T("Determinantes",
+                        ("Cálculo em 2x2 e 3x3", "Regra de Sarrus e cofatores.", 35),
+                        ("Propriedades", "Como as operações afetam o determinante.", 30),
+                        ("Regra de Cramer", "Resolvendo sistemas com determinantes.", 30)),
+                    T("Autovalores e autovetores",
+                        ("Conceito geométrico", "Direções que a transformação preserva.", 30),
+                        ("Polinômio característico", "Encontrando os autovalores.", 40),
+                        ("Diagonalização", "Simplificando matrizes e potências.", 45)),
+                    T("Aplicações",
+                        ("Compressão de imagens com SVD", "Redução de dimensionalidade na prática.", 40),
+                        ("Regressão linear", "Mínimos quadrados em forma matricial.", 40),
+                        ("Transformações em computação gráfica", "Rotação, escala e translação.", 35)))
             },
             new Course
             {
-                FullName = "Introdução à Análise de Dados com Python",
-                ShortName = "Python para Dados",
-                Description = "Do básico da linguagem à análise de planilhas e bases reais com pandas.",
-                Category = tech,
-                Modality = Modality.Online,
-                WorkloadHours = 80,
-                TargetAudience = "Analistas, estudantes de exatas e profissionais em transição de carreira",
-                Status = CourseStatus.Open,
-                ImageUrl = "https://res.cloudinary.com/dijfvfciv/image/upload/c_fill,w_800,h_450/v1792796184/banner-ava_zsburk.png",
-                Topics =
-                [
-                    T(1, "Python essencial",
-                        ("Estruturas de dados", "Listas, dicionários e tuplas aplicados a dados.", 40),
-                        ("Ambientes e pacotes", "Criação de ambientes virtuais e instalação de bibliotecas.", 30)),
-                    T(2, "Análise com pandas",
-                        ("DataFrames", "Leitura de arquivos CSV e operações básicas.", 50),
-                        ("Limpeza de dados", "Tratamento de valores ausentes e duplicados.", 55))
-                ]
-            },
-            new Course
-            {
-                FullName = "Gestão de Projetos com Metodologias Ágeis",
-                ShortName = "Projetos Ágeis",
-                Description = "Planeje, acompanhe e entregue projetos com Scrum e Kanban.",
-                Category = business,
+                FullName = "Cálculo Diferencial e Integral I",
+                ShortName = "Cálculo I",
+                Slug = "calculo-diferencial-integral-1",
+                Description = "Limites, derivadas e integrais de funções de uma variável, com muitos exercícios resolvidos e aplicações.",
+                Category = math,
                 Modality = Modality.InPerson,
-                WorkloadHours = 40,
-                TargetAudience = "Gerentes de projeto, líderes de equipe e analistas",
-                Status = CourseStatus.Finished,
-                ImageUrl = "https://res.cloudinary.com/dijfvfciv/image/upload/c_fill,w_800,h_450/v1792796184/banner-ava_zsburk.png",
-                Topics =
-                [
-                    T(1, "Princípios ágeis",
-                        ("Manifesto Ágil", "Valores e princípios que guiam as equipes ágeis.", 30),
-                        ("Scrum em detalhes", "Papéis, eventos e artefatos do Scrum.", 60)),
-                    T(2, "Planejamento e entrega",
-                        ("Backlog e priorização", "Como organizar e priorizar o trabalho.", 45),
-                        ("Métricas de fluxo", "Lead time, throughput e quadros Kanban.", 40))
-                ]
+                WorkloadHours = 90,
+                TargetAudience = "Calouros de engenharia, ciências exatas e economia",
+                Status = CourseStatus.Open,
+                ImageUrl = BannerUrl,
+                Topics = Topics(
+                    T("Limites",
+                        ("Noção intuitiva de limite", "Aproximação de valores e comportamento de funções.", 30),
+                        ("Cálculo de limites", "Técnicas algébricas e indeterminações.", 45),
+                        ("Continuidade", "Condições e teorema do valor intermediário.", 35)),
+                    T("Derivadas",
+                        ("Definição de derivada", "Taxa de variação e reta tangente.", 40),
+                        ("Regras de derivação", "Soma, produto, quociente e potência.", 45),
+                        ("Regra da cadeia", "Derivando funções compostas.", 40)),
+                    T("Aplicações da derivada",
+                        ("Máximos e mínimos", "Pontos críticos e teste da derivada.", 45),
+                        ("Otimização", "Problemas práticos de maximização.", 50),
+                        ("Taxas relacionadas", "Variações simultâneas de grandezas.", 40)),
+                    T("Integrais",
+                        ("Antiderivadas", "Integral indefinida e constante de integração.", 35),
+                        ("Integral definida", "Soma de Riemann e área sob a curva.", 45),
+                        ("Teorema Fundamental do Cálculo", "Conexão entre derivada e integral.", 40)),
+                    T("Técnicas de integração",
+                        ("Substituição", "Mudança de variável.", 40),
+                        ("Integração por partes", "Quando e como aplicar.", 45),
+                        ("Frações parciais", "Integrais de funções racionais.", 50)),
+                    T("Aplicações da integral",
+                        ("Áreas entre curvas", "Cálculo de regiões delimitadas.", 40),
+                        ("Volumes de sólidos de revolução", "Discos e cascas cilíndricas.", 50),
+                        ("Valor médio e trabalho", "Aplicações em física e engenharia.", 40)))
             },
             new Course
             {
-                FullName = "Finanças Pessoais e Empresariais para Empreendedores",
-                ShortName = "Finanças para Empreendedores",
-                Description = "Controle de caixa, precificação e decisões financeiras para pequenos negócios.",
-                Category = business,
+                FullName = "Estatística e Probabilidade para Análise de Dados",
+                ShortName = "Estatística e Probabilidade",
+                Slug = "estatistica-probabilidade-dados",
+                Description = "Da estatística descritiva à inferência: probabilidade, distribuições, testes de hipóteses e regressão.",
+                Category = math,
+                Modality = Modality.Online,
+                WorkloadHours = 45,
+                TargetAudience = "Analistas de dados, pesquisadores e estudantes de qualquer área",
+                Status = CourseStatus.ComingSoon,
+                AvailableFrom = new DateOnly(2027, 2, 8),
+                ImageUrl = BannerUrl,
+                Topics = Topics(
+                    T("Estatística descritiva",
+                        ("Tipos de variáveis", "Qualitativas, quantitativas, discretas e contínuas.", 25),
+                        ("Medidas de tendência central", "Média, mediana e moda.", 30),
+                        ("Medidas de dispersão", "Variância, desvio padrão e quartis.", 35)),
+                    T("Probabilidade básica",
+                        ("Espaço amostral e eventos", "Definições e operações com eventos.", 30),
+                        ("Regras de probabilidade", "Adição, multiplicação e complementar.", 35),
+                        ("Probabilidade condicional", "Teorema de Bayes e independência.", 45)),
+                    T("Variáveis aleatórias",
+                        ("Variáveis discretas", "Função de probabilidade e esperança.", 35),
+                        ("Distribuição binomial", "Experimentos com sucesso e fracasso.", 40),
+                        ("Distribuição normal", "Curva normal e escore z.", 45)),
+                    T("Amostragem",
+                        ("Técnicas de amostragem", "Aleatória, estratificada e por conglomerados.", 30),
+                        ("Teorema central do limite", "Por que a média amostral é tão útil.", 40),
+                        ("Viés e erros amostrais", "Como evitar conclusões enganosas.", 30)),
+                    T("Inferência estatística",
+                        ("Intervalos de confiança", "Estimando parâmetros populacionais.", 45),
+                        ("Testes de hipóteses", "Hipóteses nula e alternativa e p-valor.", 50),
+                        ("Comparação de médias", "Teste t para duas amostras.", 45)),
+                    T("Análise de dados na prática",
+                        ("Correlação", "Medindo a relação entre variáveis.", 35),
+                        ("Regressão linear simples", "Ajustando e interpretando modelos.", 45),
+                        ("Visualização de resultados", "Gráficos que comunicam bem.", 30)))
+            },
+            new Course
+            {
+                FullName = "Matemática Financeira Essencial",
+                ShortName = "Matemática Financeira",
+                Slug = "matematica-financeira-essencial",
+                Description = "Juros, descontos, financiamentos e análise de investimentos para decisões financeiras mais conscientes.",
+                Category = math,
                 Modality = Modality.Online,
                 WorkloadHours = 30,
-                TargetAudience = "Pequenos empreendedores e microempreendedores individuais",
-                Status = CourseStatus.ComingSoon,
-                AvailableFrom = new DateOnly(2027, 2, 1),
-                ImageUrl = "https://res.cloudinary.com/dijfvfciv/image/upload/c_fill,w_800,h_450/v1792796184/banner-ava_zsburk.png",
-                Topics =
-                [
-                    T(1, "Organização financeira",
-                        ("Fluxo de caixa", "Como registrar entradas e saídas do negócio.", 35),
-                        ("Separando as contas", "Por que separar finanças pessoais e empresariais.", 25)),
-                    T(2, "Precificação e lucro",
-                        ("Custos fixos e variáveis", "Identificando e classificando os custos.", 40),
-                        ("Formação de preço", "Do custo à margem de lucro desejada.", 45))
-                ]
+                TargetAudience = "Profissionais de finanças, empreendedores e concurseiros",
+                Status = CourseStatus.Finished,
+                ImageUrl = BannerUrl,
+                Topics = Topics(
+                    T("Fundamentos",
+                        ("Valor do dinheiro no tempo", "Por que R$ 100 hoje valem mais que amanhã.", 25),
+                        ("Porcentagem aplicada", "Descontos, acréscimos e variações.", 30),
+                        ("Fluxo de caixa", "Representando entradas e saídas.", 25)),
+                    T("Juros simples",
+                        ("Cálculo de juros simples", "Fórmulas e interpretação.", 30),
+                        ("Montante e capital", "Relação entre valor presente e futuro.", 25),
+                        ("Descontos simples", "Desconto comercial e racional.", 30)),
+                    T("Juros compostos",
+                        ("Capitalização composta", "Juros sobre juros.", 35),
+                        ("Taxas equivalentes e nominais", "Conversões entre períodos.", 40),
+                        ("Comparando simples e compostos", "Impacto no longo prazo.", 30)),
+                    T("Séries de pagamentos",
+                        ("Rendas postecipadas", "Parcelas pagas no fim do período.", 35),
+                        ("Rendas antecipadas", "Parcelas pagas no início do período.", 30),
+                        ("Financiamentos", "Simulação de compra parcelada.", 40)),
+                    T("Sistemas de amortização",
+                        ("Tabela Price", "Parcelas constantes.", 40),
+                        ("Sistema SAC", "Amortização constante.", 40),
+                        ("Comparando Price e SAC", "Qual compensa em cada cenário.", 35)),
+                    T("Análise de investimentos",
+                        ("Valor presente líquido", "Avaliando projetos.", 40),
+                        ("Taxa interna de retorno", "Interpretação e limitações.", 40),
+                        ("Inflação e juros reais", "Corrigindo valores no tempo.", 30)))
             },
+
+            // ===================== CIÊNCIAS DA NATUREZA =====================
             new Course
             {
-                FullName = "Fundamentos de Experiência do Usuário (UX Design)",
-                ShortName = "UX Design",
-                Description = "Pesquisa, prototipação e testes para criar produtos centrados nas pessoas.",
-                Category = design,
+                FullName = "Física Mecânica do Zero",
+                ShortName = "Física Mecânica",
+                Slug = "fisica-mecanica-do-zero",
+                Description = "Cinemática, leis de Newton, energia, colisões e rotação, com experimentos e resolução guiada de problemas.",
+                Category = nature,
                 Modality = Modality.InPerson,
-                WorkloadHours = 45,
-                TargetAudience = "Designers iniciantes, desenvolvedores e profissionais de produto",
-                Status = CourseStatus.ComingSoon,
-                AvailableFrom = new DateOnly(2027, 3, 15),
-                ImageUrl = "https://res.cloudinary.com/dijfvfciv/image/upload/c_fill,w_800,h_450/v1792796184/banner-ava_zsburk.png",
-                Topics =
-                [
-                    T(1, "Pesquisa com usuários",
-                        ("Entrevistas", "Como planejar e conduzir entrevistas.", 40),
-                        ("Personas e jornadas", "Sintetizando a pesquisa em artefatos de design.", 45)),
-                    T(2, "Prototipação",
-                        ("Wireframes", "Esboços de baixa e média fidelidade.", 50)),
-                    T(3, "Testes de usabilidade",
-                        ("Planejando um teste", "Roteiro, tarefas e recrutamento.", 35),
-                        ("Analisando resultados", "Transformando observações em melhorias.", 40))
-                ]
+                WorkloadHours = 80,
+                TargetAudience = "Estudantes do ensino médio, vestibulandos e calouros de engenharia",
+                Status = CourseStatus.Open,
+                ImageUrl = BannerUrl,
+                Topics = Topics(
+                    T("Grandezas e medidas",
+                        ("Unidades e Sistema Internacional", "Padrões de medida.", 25),
+                        ("Notação científica", "Ordens de grandeza.", 25),
+                        ("Vetores na física", "Grandezas escalares e vetoriais.", 35)),
+                    T("Cinemática",
+                        ("Movimento uniforme", "Posição, velocidade e gráficos.", 35),
+                        ("Movimento uniformemente variado", "Aceleração e equações horárias.", 45),
+                        ("Queda livre e lançamentos", "Movimento sob ação da gravidade.", 45)),
+                    T("Leis de Newton",
+                        ("Primeira lei", "Inércia e referenciais.", 30),
+                        ("Segunda lei", "Força, massa e aceleração.", 40),
+                        ("Terceira lei e atrito", "Pares de ação e reação.", 40)),
+                    T("Trabalho e energia",
+                        ("Trabalho de uma força", "Definição e sinal do trabalho.", 35),
+                        ("Energia cinética e potencial", "Formas de energia mecânica.", 40),
+                        ("Conservação da energia", "Problemas com sistemas conservativos.", 45)),
+                    T("Momento linear e colisões",
+                        ("Quantidade de movimento", "Definição e impulso.", 35),
+                        ("Conservação do momento", "Sistemas isolados.", 40),
+                        ("Colisões elásticas e inelásticas", "Análise de choques.", 45)),
+                    T("Rotação e equilíbrio",
+                        ("Torque", "Efeito de rotação de uma força.", 35),
+                        ("Equilíbrio de corpos rígidos", "Condições de equilíbrio estático.", 40),
+                        ("Movimento circular", "Velocidade angular e força centrípeta.", 40)))
             },
             new Course
             {
-                FullName = "Design de Interfaces com Figma",
-                ShortName = "Figma na Prática",
-                Description = "Crie telas, componentes e design systems com uma das ferramentas mais usadas do mercado.",
-                Category = design,
+                FullName = "Química Geral e Orgânica",
+                ShortName = "Química Geral e Orgânica",
+                Slug = "quimica-geral-organica",
+                Description = "Estrutura atômica, ligações, reações, equilíbrio e introdução à química orgânica, com aulas práticas de laboratório.",
+                Category = nature,
+                Modality = Modality.InPerson,
+                WorkloadHours = 100,
+                TargetAudience = "Estudantes de saúde, biologia, engenharia e vestibulandos",
+                Status = CourseStatus.ComingSoon,
+                AvailableFrom = new DateOnly(2027, 3, 1),
+                ImageUrl = BannerUrl,
+                Topics = Topics(
+                    T("Estrutura atômica",
+                        ("Modelos atômicos", "Da teoria de Dalton ao modelo quântico.", 35),
+                        ("Distribuição eletrônica", "Diagrama de Linus Pauling.", 35),
+                        ("Tabela periódica", "Propriedades periódicas.", 40)),
+                    T("Ligações químicas",
+                        ("Ligação iônica", "Formação e propriedades.", 30),
+                        ("Ligação covalente", "Compartilhamento de elétrons e geometria.", 40),
+                        ("Forças intermoleculares", "Impacto no ponto de ebulição e na solubilidade.", 35)),
+                    T("Reações e estequiometria",
+                        ("Balanceamento de equações", "Conservação de massa.", 35),
+                        ("Cálculos estequiométricos", "Mol, massa e rendimento.", 50),
+                        ("Reagente limitante", "Identificando o fator que limita a reação.", 40)),
+                    T("Soluções e equilíbrio",
+                        ("Concentração de soluções", "Molaridade e diluição.", 40),
+                        ("Equilíbrio químico", "Constante e princípio de Le Chatelier.", 45),
+                        ("Ácidos, bases e pH", "Escala de pH e soluções tampão.", 45)),
+                    T("Introdução à química orgânica",
+                        ("O carbono e suas cadeias", "Classificação de cadeias carbônicas.", 35),
+                        ("Funções orgânicas", "Hidrocarbonetos, álcoois, ácidos e outras.", 50),
+                        ("Nomenclatura IUPAC", "Regras de nomeação.", 45)),
+                    T("Reações orgânicas e laboratório",
+                        ("Substituição e adição", "Mecanismos básicos.", 45),
+                        ("Segurança no laboratório", "Boas práticas e descarte de resíduos.", 30),
+                        ("Prática de titulação", "Procedimento e cálculo de resultados.", 50)))
+            },
+            new Course
+            {
+                FullName = "Biologia Celular e Genética",
+                ShortName = "Biologia Celular e Genética",
+                Slug = "biologia-celular-genetica",
+                Description = "Organização da célula, metabolismo, divisão celular, hereditariedade e as tecnologias genéticas atuais.",
+                Category = nature,
                 Modality = Modality.Online,
-                WorkloadHours = 24,
-                TargetAudience = "Designers, desenvolvedores front-end e estudantes de design",
+                WorkloadHours = 70,
+                TargetAudience = "Estudantes de biologia e saúde, professores e curiosos pela ciência",
                 Status = CourseStatus.Open,
-                ImageUrl = "https://res.cloudinary.com/dijfvfciv/image/upload/c_fill,w_800,h_450/v1792796184/banner-ava_zsburk.png",
-                Topics =
-                [
-                    T(1, "Primeiros passos",
-                        ("Interface e ferramentas", "Conhecendo o espaço de trabalho.", 30),
-                        ("Auto layout", "Telas flexíveis e responsivas.", 40)),
-                    T(2, "Design systems",
-                        ("Componentes e variantes", "Criando elementos reutilizáveis.", 45),
-                        ("Estilos e bibliotecas", "Organizando cores, tipografia e compartilhamento.", 35))
-                ]
+                ImageUrl = BannerUrl,
+                Topics = Topics(
+                    T("A célula",
+                        ("Células procariontes e eucariontes", "Diferenças estruturais.", 30),
+                        ("Organelas", "Funções de cada compartimento.", 40),
+                        ("Membrana plasmática", "Transporte passivo e ativo.", 35)),
+                    T("Metabolismo energético",
+                        ("Respiração celular", "Etapas e saldo de ATP.", 45),
+                        ("Fotossíntese", "Fases clara e escura.", 40),
+                        ("Fermentação", "Rotas anaeróbicas e aplicações.", 30)),
+                    T("Ciclo celular",
+                        ("Interfase", "Fases G1, S e G2.", 30),
+                        ("Mitose", "Etapas e importância.", 40),
+                        ("Meiose", "Formação de gametas e variabilidade.", 45)),
+                    T("DNA e síntese de proteínas",
+                        ("Estrutura do DNA", "Nucleotídeos e dupla hélice.", 35),
+                        ("Transcrição", "Do DNA ao RNA mensageiro.", 35),
+                        ("Tradução", "Código genético e síntese proteica.", 40)),
+                    T("Genética clássica",
+                        ("Primeira lei de Mendel", "Segregação dos alelos.", 40),
+                        ("Segunda lei de Mendel", "Segregação independente.", 40),
+                        ("Heredogramas", "Interpretando heranças em famílias.", 35)),
+                    T("Genética moderna",
+                        ("Mutações", "Tipos e consequências.", 35),
+                        ("Tecnologias de edição genética", "Princípios do CRISPR e aplicações.", 40),
+                        ("Bioética e genética", "Debates éticos contemporâneos.", 30)))
+            },
+            new Course
+            {
+                FullName = "Astronomia para Curiosos",
+                ShortName = "Astronomia",
+                Slug = "astronomia-para-curiosos",
+                Description = "Um passeio pelo céu, pelo Sistema Solar, pelas estrelas e pelo Universo, sem exigir conhecimento prévio.",
+                Category = nature,
+                Modality = Modality.Online,
+                WorkloadHours = 20,
+                TargetAudience = "Público geral, estudantes do ensino fundamental e médio e entusiastas",
+                Status = CourseStatus.Finished,
+                ImageUrl = BannerUrl,
+                Topics = Topics(
+                    T("Olhando para o céu",
+                        ("Constelações e orientação", "Como se localizar no céu noturno.", 25),
+                        ("Instrumentos de observação", "Telescópios e binóculos.", 25),
+                        ("Fases da Lua", "Por que a Lua muda de aparência.", 20)),
+                    T("Sistema Solar",
+                        ("O Sol", "Estrutura e atividade solar.", 25),
+                        ("Planetas rochosos", "Mercúrio, Vênus, Terra e Marte.", 30),
+                        ("Planetas gigantes", "Júpiter, Saturno, Urano e Netuno.", 30)),
+                    T("Corpos menores",
+                        ("Asteroides e meteoros", "Origem e riscos de impacto.", 25),
+                        ("Cometas", "Composição e órbitas.", 20),
+                        ("Planetas anões", "Plutão e o cinturão de Kuiper.", 25)),
+                    T("Estrelas",
+                        ("Nascimento das estrelas", "Nebulosas e protoestrelas.", 30),
+                        ("Vida e morte estelar", "Anãs brancas, supernovas e buracos negros.", 35),
+                        ("Classificação espectral", "Cor, temperatura e brilho.", 30)),
+                    T("Galáxias e Universo",
+                        ("A Via Láctea", "Estrutura da nossa galáxia.", 25),
+                        ("Expansão do Universo", "Evidências e lei de Hubble.", 30),
+                        ("Big Bang", "Modelo cosmológico padrão.", 35)),
+                    T("Exploração espacial",
+                        ("História das missões espaciais", "Marcos da corrida espacial.", 25),
+                        ("Exoplanetas", "Métodos de detecção.", 30),
+                        ("Vida fora da Terra", "Astrobiologia e zona habitável.", 30)))
+            },
+
+            // ===================== LINGUAGENS (PROGRAMAÇÃO) =====================
+            new Course
+            {
+                FullName = "Lógica de Programação com Python",
+                ShortName = "Lógica com Python",
+                Slug = "logica-programacao-python",
+                Description = "Seu primeiro contato com programação: variáveis, condições, laços, listas e funções, com projetos práticos.",
+                Category = languages,
+                Modality = Modality.Online,
+                WorkloadHours = 50,
+                TargetAudience = "Iniciantes absolutos e pessoas em transição de carreira",
+                Status = CourseStatus.Open,
+                ImageUrl = BannerUrl,
+                Topics = Topics(
+                    T("Primeiros passos",
+                        ("O que é programar", "Algoritmos e linguagens.", 20),
+                        ("Instalando o Python", "Configuração do ambiente.", 20),
+                        ("Variáveis e tipos de dados", "Números, textos e booleanos.", 30)),
+                    T("Entrada, saída e operadores",
+                        ("Entrada e saída", "Usando input e print.", 25),
+                        ("Operadores aritméticos e lógicos", "Expressões e precedência.", 30),
+                        ("Formatação de textos", "f-strings e conversões.", 25)),
+                    T("Estruturas condicionais",
+                        ("If, elif e else", "Tomada de decisão.", 30),
+                        ("Operadores de comparação", "Condições compostas.", 25),
+                        ("Exercícios de lógica", "Resolvendo problemas passo a passo.", 40)),
+                    T("Estruturas de repetição",
+                        ("Laço while", "Repetição com condição.", 30),
+                        ("Laço for e range", "Iterando sobre sequências.", 35),
+                        ("Break e continue", "Controlando o fluxo do laço.", 25)),
+                    T("Listas e dicionários",
+                        ("Listas", "Criação, índices e métodos.", 35),
+                        ("Dicionários", "Pares de chave e valor.", 35),
+                        ("Percorrendo coleções", "Compreensões de lista.", 35)),
+                    T("Funções e organização",
+                        ("Criando funções", "Parâmetros e retorno.", 35),
+                        ("Módulos e bibliotecas", "Importando código.", 30),
+                        ("Projeto final", "Construindo um jogo de adivinhação.", 60)))
+            },
+            new Course
+            {
+                FullName = "JavaScript e TypeScript Moderno",
+                ShortName = "JavaScript e TypeScript",
+                Slug = "javascript-typescript-moderno",
+                Description = "JavaScript atual, programação assíncrona, TypeScript com tipagem avançada e construção de uma API com Node.js.",
+                Category = languages,
+                Modality = Modality.Online,
+                WorkloadHours = 75,
+                TargetAudience = "Desenvolvedores iniciantes e intermediários que querem atuar com web e back-end",
+                Status = CourseStatus.ComingSoon,
+                AvailableFrom = new DateOnly(2027, 4, 12),
+                ImageUrl = BannerUrl,
+                Topics = Topics(
+                    T("JavaScript essencial",
+                        ("Variáveis e tipos", "let, const e tipos primitivos.", 30),
+                        ("Funções e escopo", "Arrow functions e closures.", 40),
+                        ("Arrays e objetos", "Métodos como map, filter e reduce.", 45)),
+                    T("JavaScript assíncrono",
+                        ("Callbacks e Promises", "Entendendo o fluxo assíncrono.", 40),
+                        ("Async e await", "Código assíncrono legível.", 40),
+                        ("Consumindo APIs com fetch", "Requisições HTTP e tratamento de erros.", 45)),
+                    T("Introdução ao TypeScript",
+                        ("Por que usar TypeScript", "Benefícios da tipagem estática.", 25),
+                        ("Tipos básicos e inferência", "Anotações e tipos literais.", 35),
+                        ("Interfaces e types", "Modelando estruturas de dados.", 40)),
+                    T("TypeScript avançado",
+                        ("Generics", "Funções e tipos reutilizáveis.", 45),
+                        ("Union e intersection types", "Combinando tipos.", 40),
+                        ("Utility types", "Partial, Pick, Omit e Record.", 35)),
+                    T("Node.js e módulos",
+                        ("Módulos ES", "Import e export.", 30),
+                        ("Gerenciando pacotes com npm", "Dependências e scripts.", 30),
+                        ("Criando uma API simples", "Rotas e respostas JSON.", 50)),
+                    T("Qualidade de código",
+                        ("Lint e formatação", "ESLint e Prettier.", 25),
+                        ("Testes automatizados", "Testes unitários com Vitest.", 45),
+                        ("Projeto final", "API tipada com testes.", 60)))
+            },
+            new Course
+            {
+                FullName = "C# e .NET para Construção de APIs",
+                ShortName = "C# e .NET",
+                Slug = "csharp-dotnet-apis",
+                Description = "Do básico do C# à publicação de uma API REST com ASP.NET Core, Entity Framework Core e PostgreSQL.",
+                Category = languages,
+                Modality = Modality.Online,
+                WorkloadHours = 120,
+                TargetAudience = "Desenvolvedores que vêm de outras linguagens e querem atuar com .NET",
+                Status = CourseStatus.Open,
+                ImageUrl = BannerUrl,
+                Topics = Topics(
+                    T("Fundamentos do C#",
+                        ("Instalação e primeiro projeto", "SDK .NET e CLI.", 25),
+                        ("Tipos, variáveis e operadores", "Sintaxe básica da linguagem.", 35),
+                        ("Controle de fluxo", "Condicionais e laços.", 30)),
+                    T("Orientação a objetos",
+                        ("Classes e objetos", "Propriedades e construtores.", 40),
+                        ("Herança e interfaces", "Contratos e reuso.", 45),
+                        ("Records e imutabilidade", "Modelando dados com records.", 30)),
+                    T("LINQ e coleções",
+                        ("Listas e dicionários", "Coleções genéricas.", 30),
+                        ("Consultas com LINQ", "Where, Select e OrderBy.", 45),
+                        ("Programação assíncrona", "Task, async e await.", 45)),
+                    T("ASP.NET Core",
+                        ("Controllers e rotas", "Criando endpoints REST.", 45),
+                        ("Injeção de dependência", "Serviços e ciclo de vida.", 40),
+                        ("Validação e DTOs", "DataAnnotations e contratos de resposta.", 40)),
+                    T("Entity Framework Core",
+                        ("Modelagem de entidades", "Mapeando classes para tabelas.", 45),
+                        ("Migrations", "Versionando o banco de dados.", 40),
+                        ("Consultas e relacionamentos", "Include, projeções e paginação.", 50)),
+                    T("Produção e boas práticas",
+                        ("Configuração e variáveis de ambiente", "Appsettings e segredos.", 30),
+                        ("Tratamento de erros", "ProblemDetails e middlewares.", 40),
+                        ("Deploy com Docker", "Empacotando e publicando a API.", 50)))
+            },
+            new Course
+            {
+                FullName = "SQL e Modelagem de Dados",
+                ShortName = "SQL e Modelagem",
+                Slug = "sql-modelagem-dados",
+                Description = "Consultas SQL, junções, agregações, modelagem relacional e noções de desempenho com PostgreSQL.",
+                Category = languages,
+                Modality = Modality.InPerson,
+                WorkloadHours = 40,
+                TargetAudience = "Analistas, desenvolvedores e estudantes de tecnologia",
+                Status = CourseStatus.Finished,
+                ImageUrl = BannerUrl,
+                Topics = Topics(
+                    T("Introdução a bancos de dados",
+                        ("Bancos relacionais", "Tabelas, linhas e colunas.", 25),
+                        ("Instalando o PostgreSQL", "Ambiente com Docker.", 25),
+                        ("Primeiras consultas com SELECT", "Leitura de dados.", 30)),
+                    T("Filtros e ordenação",
+                        ("WHERE e operadores", "Filtrando registros.", 30),
+                        ("ORDER BY e LIMIT", "Ordenação e paginação.", 25),
+                        ("Funções de texto e data", "Manipulando valores.", 30)),
+                    T("Agregações",
+                        ("COUNT, SUM e AVG", "Funções de agregação.", 30),
+                        ("GROUP BY", "Agrupando resultados.", 35),
+                        ("HAVING", "Filtrando grupos.", 25)),
+                    T("Junções",
+                        ("INNER JOIN", "Combinando tabelas.", 35),
+                        ("LEFT e RIGHT JOIN", "Registros sem correspondência.", 35),
+                        ("Subconsultas", "Consultas aninhadas e CTEs.", 40)),
+                    T("Modelagem de dados",
+                        ("Diagrama entidade-relacionamento", "Entidades e relacionamentos.", 35),
+                        ("Chaves primárias e estrangeiras", "Integridade referencial.", 30),
+                        ("Normalização", "Formas normais na prática.", 40)),
+                    T("Escrita e desempenho",
+                        ("INSERT, UPDATE e DELETE", "Alterando dados.", 30),
+                        ("Transações", "ACID e controle de concorrência.", 35),
+                        ("Índices e EXPLAIN", "Analisando e otimizando consultas.", 40)))
             });
 
         await db.SaveChangesAsync();
     }
 
     // Cria um Topic com suas aulas; a ordem das aulas segue a posição na lista
-    private static Topic T(int order, string title,
-        params (string Title, string Description, int Minutes)[] lessons) => new()
+    private static Topic T(string title, params (string Title, string Description, int Minutes)[] lessons) => new()
+    {
+        Title = title,
+        Lessons = lessons.Select((l, i) => new Lesson
         {
-            Order = order,
-            Title = title,
-            Lessons = lessons.Select((l, i) => new Lesson
-            {
-                Order = i + 1,
-                Title = l.Title,
-                Description = l.Description,
-                DurationMinutes = l.Minutes
-            }).ToList()
-        };
+            Order = i + 1,
+            Title = l.Title,
+            Description = l.Description,
+            DurationMinutes = l.Minutes
+        }).ToList()
+    };
+
+    // Define a ordem dos tópicos pela posição na lista
+    private static List<Topic> Topics(params Topic[] topics)
+    {
+        for (var i = 0; i < topics.Length; i++) topics[i].Order = i + 1;
+        return [.. topics];
+    }
 }

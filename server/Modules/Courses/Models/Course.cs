@@ -5,6 +5,7 @@ public class Course
     public int Id { get; set; }
     public string FullName { get; set; } = string.Empty;
     public string ShortName { get; set; } = string.Empty;
+    public string Slug { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
 
     public int CategoryId { get; set; }

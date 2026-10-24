@@ -23,4 +23,12 @@ public class CoursesController(ICourseService service) : ControllerBase
     [HttpGet("filters")]
     public async Task<ActionResult<CourseFiltersDto>> GetFilters() =>
         Ok(await service.GetFiltersAsync());
+
+    // Rota GET /api/courses/{slug} (retorna detalhes do curso pelo slug)
+    [HttpGet("{slug}")]
+    public async Task<ActionResult<CourseDetailDto>> GetBySlug(string slug)
+    {
+        var course = await service.GetBySlugAsync(slug);
+        return course is null ? NotFound() : Ok(course);
+    }
 }
