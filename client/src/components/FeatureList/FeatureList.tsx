@@ -1,7 +1,8 @@
+import type { ReactNode } from "react";
 import styles from "./FeatureList.module.scss";
 
 export type Feature = {
-  icon: string;
+  icon: string | ReactNode;
   title: string;
   description: string;
 };
@@ -16,9 +17,18 @@ export function FeatureItem({
 }: FeatureItemProps) {
   return (
     <li className={styles.feature}>
-      <span className={tone === "sand" ? styles.iconSand : styles.icon}>
-        <img src={icon} alt="" width="48" height="48" />
-      </span>
+      {typeof icon === "string" ? (
+        <span className={tone === "sand" ? styles.iconSand : styles.icon}>
+          <img src={icon} alt="" width="48" height="48" />
+        </span>
+      ) : (
+        <span
+          className={`${styles.iconBox} ${tone === "sand" ? styles.boxSand : styles.boxRed}`}
+          aria-hidden="true"
+        >
+          {icon}
+        </span>
+      )}
       <h3 className={styles.title}>{title}</h3>
       <p className={styles.text}>{description}</p>
     </li>
@@ -28,7 +38,6 @@ export function FeatureItem({
 type FeatureListProps = {
   items: Feature[];
   columns?: 3 | 4;
-  /** red: ícone vermelho (home) | sand: ícone preto sobre bege (detalhe do curso) */
   tone?: "red" | "sand";
   className?: string;
 };

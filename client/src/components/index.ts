@@ -38,3 +38,7 @@ export {
   type FilterValues,
 } from "./CourseFilters/CourseFilters";
 export { default as CourseCardSkeleton } from "./CourseCard/CourseCardSkeleton";
+export { default as Textarea } from "./Textarea/Textarea";
+export { default as VideoSection } from "./VideoSection/VideoSection";
+export { default as SplitSection } from "./SplitSection/SplitSection";
+export { default as ContactSection } from "./ContactSection/ContactSection";

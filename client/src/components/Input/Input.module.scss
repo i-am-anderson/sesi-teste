@@ -60,3 +60,11 @@
 .withIcon {
   padding-left: 44px;
 }
+
+.textarea {
+  height: auto;
+  min-height: 140px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  resize: vertical;
+}

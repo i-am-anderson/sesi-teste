@@ -1,9 +1,8 @@
+import { createElement } from "react";
+import { Target, Eye, Heart } from "lucide-react";
 import heroImage from "../assets/images/hero-image.png";
 import bannerImage from "../assets/images/banner-ava.png";
 import videoThumb from "../assets/images/video-thumb.png";
-import iconMissao from "../assets/icons/01-certificacao-red.svg";
-import iconValores from "../assets/icons/03-suporte-red.svg";
-import iconVisao from "../assets/icons/04-flexibilidade-red.svg";
 
 export const aboutIntro = {
   eyebrow: "Sobre nós",
@@ -20,19 +19,19 @@ export const aboutPillars = {
   title: "Missão, visão e valores",
   items: [
     {
-      icon: iconMissao,
+      icon: createElement(Target, { size: 24, strokeWidth: 1.5 }),
       title: "Missão",
       description:
         "Ampliar o acesso à educação de qualidade e fortalecer a carreira de quem trabalha na indústria.",
     },
     {
-      icon: iconVisao,
+      icon: createElement(Eye, { size: 24, strokeWidth: 1.5 }),
       title: "Visão",
       description:
         "Ser a principal referência em capacitação profissional para a indústria brasileira.",
     },
     {
-      icon: iconValores,
+      icon: createElement(Heart, { size: 24, strokeWidth: 1.5 }),
       title: "Valores",
       description:
         "Excelência, acessibilidade, segurança e compromisso com o resultado de cada aluno.",

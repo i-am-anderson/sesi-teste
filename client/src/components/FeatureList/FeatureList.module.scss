@@ -35,7 +35,6 @@
   display: flex;
 }
 
-// ícone em preto sobre fundo bege
 .iconSand {
   display: flex;
   border-radius: $radius-md;
@@ -58,4 +57,22 @@
   font-size: 14px;
   line-height: 1.45;
   color: $color-muted;
+}
+
+.iconBox {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: $radius-md;
+}
+
+.boxSand {
+  color: $color-ink;
+  background: #fcd19c;
+}
+
+.boxRed {
+  color: $color-primary;
+  background: rgba($color-primary, 0.08);
 }

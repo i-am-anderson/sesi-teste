@@ -12,11 +12,13 @@ import {
   FaqList,
   ContactCtaSection,
   EnrollBar,
+  Container,
 } from "../../components";
 import NotFound from "../NotFound";
 import { getCourse } from "../../services/courses";
 import { categoryById } from "../../data/courses";
 import { onlineSections, faq } from "../../data/courseInfo";
+import styles from "./CourseDetails.module.scss";
 
 export default function CourseDetailsPage() {
   const { id } = useParams();
@@ -37,7 +39,14 @@ export default function CourseDetailsPage() {
   return (
     <>
       <Header solid />
-      <main aria-busy={isLoading} style={{ minHeight: "100vh" }}>
+      <main className={styles.main} aria-busy={isLoading}>
+        {isLoading && (
+          <Container>
+            <p className={styles.loading} role="status">
+              Carregando curso…
+            </p>
+          </Container>
+        )}
         {course && (
           <>
             <CourseHero
