@@ -38,12 +38,14 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
+}
 
-    using var scope = app.Services.CreateScope();
+using (var scope = app.Services.CreateScope())
+{
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     // o método MigrateAsync cria o banco de dados e aplica as migrations pendentes, ao clonar o projeto, o banco de dados será criado automaticamente e populado com os cursos de exemplo
     await db.Database.MigrateAsync();
-    await CourseSeeder.SeedAsync(db);
+    await CourseSeeder.SeedAsync(db, app.Configuration.GetValue<bool>("Seed:Reset"));
 }
 
 app.UseHttpsRedirection();
