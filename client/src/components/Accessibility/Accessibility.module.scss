@@ -2,7 +2,7 @@
 @use "../../styles/theme" as *;
 
 .fab {
-  --fab-top: calc(50% + 46px);
+  --fab-top: calc(50% - 95px);
 
   position: fixed;
   top: var(--fab-top);
