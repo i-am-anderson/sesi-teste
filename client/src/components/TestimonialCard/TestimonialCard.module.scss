@@ -1,4 +1,4 @@
-@use '../../styles/theme' as *;
+@use "../../styles/theme" as *;
 
 .card {
   display: flex;
@@ -37,4 +37,19 @@
 
 .author > :last-child {
   margin-top: 16px;
+}
+
+.light {
+  color: $color-ink;
+  background: $color-white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+  .role {
+    color: $color-muted;
+    opacity: 1;
+  }
+
+  img {
+    filter: brightness(0);
+  }
 }

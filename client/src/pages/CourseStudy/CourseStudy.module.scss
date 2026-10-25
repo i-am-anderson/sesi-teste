@@ -1,0 +1,7 @@
+@use '../../styles/theme' as *;
+
+.loading {
+  padding: 48px $gutter;
+  font-size: 18px;
+  color: $color-muted;
+}

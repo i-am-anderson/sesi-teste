@@ -1,3 +1,5 @@
+import type { CourseDto } from '../services/courses'
+import type { CourseCardProps } from '../components/CourseCard/CourseCard'
 import cover from '../assets/images/banner-ava.png'
 import iconNatureza from '../assets/icons/icon-ciencias-natureza-20px.svg'
 import iconMatematica from '../assets/icons/icon-matematica-20px.svg'
@@ -51,3 +53,31 @@ export const courses = [
     href: '#',
   },
 ]
+
+// id da categoria da API -> chave em `categories` (ícone e cor da tag)
+export const categoryById: Record<number, keyof typeof categories> = {
+  1: 'natureza',
+  2: 'matematica',
+  3: 'linguagens',
+}
+
+export const modalityLabels: Record<CourseDto['modality'], string> = {
+  Online: 'Online',
+  InPerson: 'Presencial',
+}
+
+export const statusLabels: Record<CourseDto['status'], string> = {
+  Open: 'Matrículas abertas',
+  ComingSoon: 'Em breve',
+  Finished: 'Encerrado',
+}
+
+export const toCourseCardProps = (course: CourseDto): CourseCardProps => ({
+  title: course.fullName,
+  description: course.description,
+  image: course.imageUrl,
+  category: categoryById[course.category.id],
+  href: `/curso/${course.slug}`,
+})
+
+export const EMPTY_FILTERS = { categoryId: '', modality: '', status: '' }

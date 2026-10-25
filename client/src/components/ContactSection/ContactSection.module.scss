@@ -1,0 +1,49 @@
+@use "../../styles/theme" as *;
+
+.section {
+  padding: 72px 0;
+  background: #fcd19c;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: 48px;
+  align-items: start;
+
+  @include down($bp-md) {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+.description {
+  margin-top: 16px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.contact {
+  margin-top: 24px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.feedback {
+  font-size: 14px;
+  font-weight: 600;
+}

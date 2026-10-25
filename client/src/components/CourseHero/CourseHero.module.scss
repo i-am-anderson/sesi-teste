@@ -1,0 +1,60 @@
+@use '../../styles/theme' as *;
+
+.hero {
+  padding: 112px 0 64px; // 72px do header fixo + respiro
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 40px;
+  align-items: start;
+
+  @include down($bp-md) {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title {
+  margin-top: 16px;
+  font-size: clamp(30px, 3.4vw, 40px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 24px 0;
+  font-size: 14px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @include down($bp-md) {
+    margin: 16px 0;
+  }
+}
+
+.image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: $radius-md;
+
+  @include down($bp-md) {
+    order: -1;
+  }
+}

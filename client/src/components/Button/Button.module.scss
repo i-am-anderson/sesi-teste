@@ -32,7 +32,7 @@
   background: $color-white;
   color: $color-ink;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: #f1f1f1;
   }
 }
@@ -42,7 +42,7 @@
   border-color: $color-ink;
   color: $color-ink;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: $color-ink;
     color: $color-white;
   }
@@ -53,8 +53,22 @@
   border-color: rgba($color-white, 0.6);
   color: $color-white;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: rgba($color-white, 0.12);
     border-color: $color-white;
   }
+}
+
+.dark {
+  background: $color-ink;
+  color: $color-white;
+
+  &:hover:not(:disabled) {
+    background: #2a2a2d;
+  }
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }

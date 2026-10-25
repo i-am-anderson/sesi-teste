@@ -1,0 +1,49 @@
+@use '../../styles/theme' as *;
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bar {
+  flex: 1;
+  height: 8px;
+  border: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  appearance: none;
+  background: var(--track);
+
+  &::-webkit-progress-bar {
+    background: var(--track);
+  }
+
+  &::-webkit-progress-value {
+    background: var(--fill);
+    transition: width $transition;
+  }
+
+  &::-moz-progress-bar {
+    background: var(--fill);
+  }
+}
+
+.value {
+  min-width: 40px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.light {
+  --track: #{rgba($color-white, 0.25)};
+  --fill: #{$color-white};
+  color: $color-white;
+}
+
+.red {
+  --track: #{$color-line};
+  --fill: #{$color-primary};
+  color: $color-ink;
+}

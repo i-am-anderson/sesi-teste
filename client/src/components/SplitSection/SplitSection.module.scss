@@ -1,0 +1,52 @@
+@use "../../styles/theme" as *;
+
+.section {
+  padding: 56px 0;
+}
+
+.first {
+  padding-top: 112px; // 72px do header fixo + respiro
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px;
+  align-items: center;
+
+  @include down($bp-md) {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.reverse .image {
+  order: -1;
+
+  @include down($bp-md) {
+    order: 0;
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.paragraph {
+  margin-top: 16px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.cta {
+  margin-top: 24px;
+}
+
+.image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: $radius-md;
+}
