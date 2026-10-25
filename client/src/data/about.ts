@@ -43,6 +43,7 @@ export const aboutVideo = {
   eyebrow: "Institucional",
   title: "Conheça o SESI Indústria",
   image: videoThumb,
+  url: "https://www.youtube.com/watch?v=UOALUskXHcY",
 };
 
 export const aboutHistory = {
