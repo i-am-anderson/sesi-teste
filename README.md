@@ -4,6 +4,10 @@ Aplicação web de cursos online do SESI Indústria: **front-end em React** e **
 
 > **Uso de inteligência artificial:** veja [USO_DE_IA.md](USO_DE_IA.md).
 
+> URLS
+> - **Front-end:** https://client-production-4d57.up.railway.app
+> - **API:** https://server-production-49c8.up.railway.app/health
+
 ## Sumário
 
 1. [Objetivo da aplicação](#1-objetivo-da-aplicação)
