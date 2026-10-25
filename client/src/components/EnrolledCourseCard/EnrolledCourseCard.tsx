@@ -38,7 +38,7 @@ export default function EnrolledCourseCard({
             {done ? "Rever curso" : "Continuar"}
           </Button>
           {done && (
-            <Button href="#" size="sm" variant="outline">
+            <Button as="a" href="?aba=certificados" size="sm" variant="outline">
               Certificado
             </Button>
           )}
