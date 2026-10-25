@@ -23,20 +23,19 @@ import { onlineSections, faq } from "../../data/courseInfo";
 import styles from "./CourseDetails.module.scss";
 
 export default function CourseDetailsPage() {
-  const { id } = useParams();
-  const courseId = Number(id);
+  const { slug } = useParams();
 
   const {
     data: course,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["courses", courseId],
-    queryFn: () => getCourse(courseId),
-    enabled: Number.isInteger(courseId),
+    queryKey: ["courses", slug],
+    queryFn: () => getCourse(slug ?? ""),
+    enabled: typeof slug === "string" && slug.length > 0,
   });
 
-  const enrollment = useEnrollment(courseId);
+  const enrollment = useEnrollment(slug ?? "");
 
   const cta = course && {
     label: enrollment
@@ -48,7 +47,7 @@ export default function CourseDetailsPage() {
     disabled: course.status === "ComingSoon" && !enrollment,
   };
 
-  if (isError || !Number.isInteger(courseId)) return <NotFound />;
+  if (isError || !slug) return <NotFound />;
 
   return (
     <>

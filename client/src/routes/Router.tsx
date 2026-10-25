@@ -11,8 +11,8 @@ const Router = () => {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/cursos" element={<CoursesPage />} />
-      <Route path="/curso/:id" element={<CourseDetailsPage />} />
-      <Route path="/curso/:id/estudar" element={<CourseStudyPage />} />
+      <Route path="/curso/:slug" element={<CourseDetailsPage />} />
+      <Route path="/curso/:slug/estudar" element={<CourseStudyPage />} />
       <Route path="/sobre" element={<AboutPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

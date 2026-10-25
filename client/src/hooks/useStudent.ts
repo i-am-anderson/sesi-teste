@@ -7,6 +7,6 @@ export function useStudentData() {
 }
 
 /** Matrícula de um curso, ou undefined se o aluno ainda não se matriculou. */
-export function useEnrollment(courseId: number) {
-  return useStudentData().enrollments[courseId];
+export function useEnrollment(slug: string) {
+  return useStudentData().enrollments[slug];
 }

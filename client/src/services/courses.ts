@@ -11,6 +11,7 @@ export type CourseDto = {
   id: number;
   fullName: string;
   shortName: string;
+  slug: string;
   description: string;
   category: { id: number; name: string };
   modality: "Online" | "InPerson";
@@ -65,8 +66,8 @@ export type TopicDto = {
 
 export type CourseDetailDto = CourseDto & { topics: TopicDto[] };
 
-export function getCourse(id: number) {
-  return get<CourseDetailDto>(`/api/courses/${id}`);
+export function getCourse(slug: string) {
+  return get<CourseDetailDto>(`/api/courses/${slug}`);
 }
 
 // Filtros disponíveis para cursos

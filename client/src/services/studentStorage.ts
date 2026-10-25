@@ -25,9 +25,9 @@ export type Enrollment = {
   courseId: number;
   title: string;
   imageUrl: string;
-  enrolledAt: string; // ISO
-  updatedAt: string; // ISO
-  completedAt: string | null; // ISO, quando chega a 100%
+  enrolledAt: string;
+  updatedAt: string;
+  completedAt: string | null;
   lastLessonId: string | null;
   completedLessonIds: string[];
   progress: CourseProgress;
@@ -35,17 +35,14 @@ export type Enrollment = {
 
 export type StudentData = {
   version: 1;
-  /** Cursos matriculados, indexados pelo id do curso. */
-  enrollments: Record<number, Enrollment>;
+  enrollments: Record<string, Enrollment>;
 };
 
 const EMPTY: StudentData = { version: 1, enrollments: {} };
 
-// A leitura precisa devolver a MESMA referência enquanto nada mudou
-// (exigência do useSyncExternalStore), então guardamos o último valor lido.
 let cachedRaw: string | null | undefined;
 let cachedData: StudentData = EMPTY;
-let memoryOnly = false; // localStorage indisponível: mantém só em memória
+let memoryOnly = false;
 
 export function readStudent(): StudentData {
   if (memoryOnly) return cachedData;

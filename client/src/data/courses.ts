@@ -37,7 +37,7 @@ export const toCourseCardProps = (course: CourseDto): CourseCardProps => ({
   description: course.description,
   image: course.imageUrl,
   category: categoryById[course.category.id],
-  href: `/curso/${course.id}`,
+  href: `/curso/${course.slug}`,
 });
 
 export const EMPTY_FILTERS = { categoryId: "", modality: "", status: "" };

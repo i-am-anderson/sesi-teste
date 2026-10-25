@@ -38,16 +38,15 @@ function Study({ course }: { course: CourseDetailDto }) {
 }
 
 export default function CourseStudyPage() {
-  const { id } = useParams();
-  const courseId = Number(id);
+  const { slug } = useParams();
 
   const { data: course, isError } = useQuery({
-    queryKey: ["courses", courseId],
-    queryFn: () => getCourse(courseId),
-    enabled: Number.isInteger(courseId),
+    queryKey: ["courses", slug],
+    queryFn: () => getCourse(slug ?? ""),
+    enabled: slug !== undefined && slug.length > 0,
   });
 
-  if (isError || !Number.isInteger(courseId)) return <NotFound />;
+  if (isError || !slug) return <NotFound />;
   if (!course) {
     return (
       <p className={styles.loading} role="status">
