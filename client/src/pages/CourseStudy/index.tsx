@@ -1,4 +1,5 @@
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useLocation, useParams } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { StudyLayout, CourseMenu, LessonContent } from "../../components";
 import NotFound from "../NotFound";
@@ -38,12 +39,19 @@ function Study({ course }: { course: CourseDetailDto }) {
 
 export default function CourseStudyPage() {
   const { slug } = useParams();
+  const { loggedIn } = useAuth();
+  const location = useLocation();
 
   const { data: course, isError } = useQuery({
     queryKey: ["courses", slug],
     queryFn: () => getCourse(slug!),
-    enabled: !!slug,
+    enabled: !!slug && loggedIn,
   });
+
+  if (!loggedIn) {
+    const from = location.pathname + location.search;
+    return <Navigate to="/login" replace state={{ from }} />;
+  }
 
   if (isError || !slug) return <NotFound />;
   if (!course) {
