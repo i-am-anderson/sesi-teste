@@ -1,0 +1,41 @@
+@use "../../styles/theme" as *;
+
+.list {
+  display: flex;
+  gap: 8px;
+  box-shadow: inset 0 -1px 0 $color-line;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.tab {
+  flex-shrink: 0;
+  padding: 12px 20px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  font-size: 16px;
+  font-weight: 600;
+  color: $color-muted;
+  transition:
+    color $transition,
+    border-color $transition;
+  @include focus-ring;
+
+  &:focus-visible {
+    outline-offset: -3px;
+  }
+
+  &:hover {
+    color: $color-ink;
+  }
+}
+
+.selected {
+  color: $color-ink;
+  border-bottom-color: $color-primary;
+}
+
+.panel {
+  padding-top: 32px;
+}

@@ -1,0 +1,81 @@
+@use '../../styles/theme' as *;
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  font-size: 22px;
+  font-weight: 700;
+  color: $color-white;
+  background: $color-primary;
+}
+
+.name {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.email {
+  font-size: 14px;
+  color: $color-muted;
+}
+
+.groups {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  width: 100%;
+
+  @include down($bp-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.group {
+  padding: 24px;
+  border: 1px solid $color-line;
+  border-radius: $radius-md;
+}
+
+.groupTitle {
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  dt {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $color-muted;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+  }
+}

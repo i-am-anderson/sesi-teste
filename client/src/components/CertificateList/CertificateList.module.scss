@@ -1,0 +1,41 @@
+@use '../../styles/theme' as *;
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid $color-line;
+  border-radius: $radius-md;
+
+  @include down($bp-sm) {
+    flex-wrap: wrap;
+  }
+}
+
+.icon {
+  flex-shrink: 0;
+  color: $color-primary;
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.date {
+  font-size: 14px;
+  color: $color-muted;
+}

@@ -3,12 +3,16 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, CircleCheck, Circle, Lock, Search } from "lucide-react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import Input from "../Input/Input";
-import { flattenLessons, studyPath, type StudyModule } from "../../data/studyContent";
+import {
+  flattenLessons,
+  studyPath,
+  type StudyModule,
+} from "../../data/studyContent";
 import type { LessonStatus } from "../../hooks/useCourseStudy";
 import styles from "./CourseMenu.module.scss";
 
 type CourseMenuProps = {
-  courseId: number;
+  slug: string;
   courseTitle: string;
   backHref: string;
   percent: number;
@@ -33,7 +37,7 @@ const statusIcon = {
 
 /** Menu lateral: progresso, busca e módulos/aulas. */
 export default function CourseMenu({
-  courseId,
+  slug,
   courseTitle,
   backHref,
   percent,
@@ -45,12 +49,16 @@ export default function CourseMenu({
   const [query, setQuery] = useState("");
   const term = query.trim().toLowerCase();
 
-  const labels = new Map(flattenLessons(curriculum).map((item) => [item.lesson.id, item.label]));
+  const labels = new Map(
+    flattenLessons(curriculum).map((item) => [item.lesson.id, item.label]),
+  );
 
   const modules = curriculum
     .map((module) => ({
       ...module,
-      lessons: module.lessons.filter((lesson) => lesson.title.toLowerCase().includes(term)),
+      lessons: module.lessons.filter((lesson) =>
+        lesson.title.toLowerCase().includes(term),
+      ),
     }))
     .filter((module) => module.lessons.length > 0);
 
@@ -58,7 +66,7 @@ export default function CourseMenu({
     <nav className={styles.menu} aria-label="Conteúdo do curso">
       <Link to={backHref} className={styles.back} onClick={onNavigate}>
         <ArrowLeft size={20} aria-hidden="true" />
-        Voltar ao curso
+        Voltar à Área do Aluno
       </Link>
 
       <div className={styles.header}>
@@ -79,7 +87,9 @@ export default function CourseMenu({
       />
 
       <div className={styles.list}>
-        {modules.length === 0 && <p className={styles.empty}>Nenhuma aula encontrada.</p>}
+        {modules.length === 0 && (
+          <p className={styles.empty}>Nenhuma aula encontrada.</p>
+        )}
 
         {modules.map((module) => (
           <section key={module.id} className={styles.module}>
@@ -90,25 +100,36 @@ export default function CourseMenu({
                 const Icon = statusIcon[status];
                 const content = (
                   <>
-                    <Icon size={18} aria-hidden="true" className={styles[status]} />
+                    <Icon
+                      size={18}
+                      aria-hidden="true"
+                      className={styles[status]}
+                    />
                     <span className={styles.lessonName}>
                       {labels.get(lesson.id)} {lesson.title}
                     </span>
-                    <span className={styles.srOnly}>({statusText[status]})</span>
+                    <span className={styles.srOnly}>
+                      ({statusText[status]})
+                    </span>
                   </>
                 );
 
                 return (
                   <li key={lesson.id}>
                     {status === "locked" ? (
-                      <span className={`${styles.lesson} ${styles.disabled}`} aria-disabled="true">
+                      <span
+                        className={`${styles.lesson} ${styles.disabled}`}
+                        aria-disabled="true"
+                      >
                         {content}
                       </span>
                     ) : (
                       <Link
-                        to={studyPath(courseId, lesson.id)}
+                        to={studyPath(slug, lesson.id)}
                         className={`${styles.lesson} ${lesson.id === selectedId ? styles.current : ""}`}
-                        aria-current={lesson.id === selectedId ? "page" : undefined}
+                        aria-current={
+                          lesson.id === selectedId ? "page" : undefined
+                        }
                         onClick={onNavigate}
                       >
                         {content}

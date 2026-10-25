@@ -6,7 +6,6 @@ import { getCourse, type CourseDetailDto } from "../../services/courses";
 import { useCourseStudy } from "../../hooks/useCourseStudy";
 import styles from "./CourseStudy.module.scss";
 
-/** Só monta quando o curso já foi carregado (os hooks precisam dele). */
 function Study({ course }: { course: CourseDetailDto }) {
   const study = useCourseStudy(course);
 
@@ -14,9 +13,9 @@ function Study({ course }: { course: CourseDetailDto }) {
     <StudyLayout
       renderMenu={(onNavigate) => (
         <CourseMenu
-          courseId={course.id}
+          slug={course.slug}
           courseTitle={course.fullName}
-          backHref={`/curso/${course.id}`}
+          backHref={"/area-do-aluno"}
           percent={study.progress.percent}
           curriculum={study.curriculum}
           selectedId={study.selected.lesson.id}
@@ -26,7 +25,7 @@ function Study({ course }: { course: CourseDetailDto }) {
       )}
     >
       <LessonContent
-        courseId={course.id}
+        slug={course.slug}
         item={study.selected}
         nextItem={study.nextItem}
         isCompleted={study.isCompleted}
@@ -42,8 +41,8 @@ export default function CourseStudyPage() {
 
   const { data: course, isError } = useQuery({
     queryKey: ["courses", slug],
-    queryFn: () => getCourse(slug ?? ""),
-    enabled: slug !== undefined && slug.length > 0,
+    queryFn: () => getCourse(slug!),
+    enabled: !!slug,
   });
 
   if (isError || !slug) return <NotFound />;
@@ -56,7 +55,7 @@ export default function CourseStudyPage() {
   }
   // Curso ainda não iniciado: volta para a página de detalhes.
   if (course.status === "ComingSoon")
-    return <Navigate to={`/curso/${course.id}`} replace />;
+    return <Navigate to={`/curso/${course.slug}`} replace />;
 
   return <Study course={course} />;
 }

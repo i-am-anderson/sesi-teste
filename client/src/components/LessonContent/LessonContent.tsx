@@ -5,7 +5,7 @@ import banner from "../../assets/images/banner-ava.png";
 import styles from "./LessonContent.module.scss";
 
 type LessonContentProps = {
-  courseId: number;
+  slug: string;
   item: StudyItem;
   nextItem?: StudyItem;
   isCompleted: boolean;
@@ -13,9 +13,8 @@ type LessonContentProps = {
   onComplete: () => void;
 };
 
-/** Aula: banner, texto e ações (concluir → próxima aula). */
 export default function LessonContent({
-  courseId,
+  slug,
   item,
   nextItem,
   isCompleted,
@@ -57,7 +56,7 @@ export default function LessonContent({
           )}
 
           {isCompleted && nextItem && (
-            <Button href={studyPath(courseId, nextItem.lesson.id)} variant="dark" withArrow>
+            <Button href={studyPath(slug, nextItem.lesson.id)} variant="dark" withArrow>
               Próxima aula
             </Button>
           )}

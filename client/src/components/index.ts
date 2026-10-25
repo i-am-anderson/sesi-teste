@@ -45,3 +45,7 @@ export { default as ContactSection } from "./ContactSection/ContactSection";
 export { default as StudyLayout } from "./StudyLayout/StudyLayout";
 export { default as CourseMenu } from "./CourseMenu/CourseMenu";
 export { default as LessonContent } from "./LessonContent/LessonContent";
+export { default as ProfileCard } from "./ProfileCard/ProfileCard";
+export { default as EnrolledCourseCard } from "./EnrolledCourseCard/EnrolledCourseCard";
+export { default as CertificateList } from "./CertificateList/CertificateList";
+export { default as Tabs } from "./Tabs/Tabs";

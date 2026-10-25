@@ -11,13 +11,9 @@ import {
 
 export type LessonStatus = "completed" | "unlocked" | "locked";
 
-/**
- * Estado da página de estudo: currículo, aula selecionada (na URL, ?aula=),
- * liberação sequencial e persistência da matrícula/progresso no localStorage.
- */
 export function useCourseStudy(course: CourseDetailDto) {
   const [params, setParams] = useSearchParams();
-  const enrollment = useEnrollment(course.id);
+  const enrollment = useEnrollment(course.slug);
 
   const curriculum = useMemo(() => buildCurriculum(course), [course]);
   const items = useMemo(() => flattenLessons(curriculum), [curriculum]);
@@ -30,7 +26,6 @@ export function useCourseStudy(course: CourseDetailDto) {
     [curriculum, completed],
   );
 
-  // Aula liberada = a primeira não concluída e todas as anteriores.
   const currentIndex = items.findIndex((item) => !completed.has(item.lesson.id));
   const unlockedUntil = currentIndex === -1 ? items.length - 1 : currentIndex;
 
@@ -39,22 +34,21 @@ export function useCourseStudy(course: CourseDetailDto) {
 
   let selectedIndex: number;
   if (requestedIndex !== -1 && requestedIndex <= unlockedUntil) {
-    selectedIndex = requestedIndex; // aula pedida na URL (e liberada)
+    selectedIndex = requestedIndex; 
   } else if (currentIndex !== -1) {
-    selectedIndex = currentIndex; // continua de onde parou
+    selectedIndex = currentIndex;
   } else {
-    selectedIndex = Math.max(lastIndex, 0); // curso concluído
+    selectedIndex = Math.max(lastIndex, 0);
   }
 
   const selected = items[selectedIndex];
   const selectedId = selected.lesson.id;
 
-  // Matricula o aluno na primeira visita.
   useEffect(() => {
-    if (readStudent().enrollments[course.id]) return;
+    if (readStudent().enrollments[course.slug]) return;
     const now = new Date().toISOString();
     saveEnrollment({
-      courseId: course.id,
+      slug: course.slug,
       title: course.fullName,
       imageUrl: course.imageUrl,
       enrolledAt: now,
@@ -66,14 +60,12 @@ export function useCourseStudy(course: CourseDetailDto) {
     });
   }, [course, curriculum]);
 
-  // Mantém a aula na URL (link compartilhável e botão "voltar").
   useEffect(() => {
     if (params.get("aula") !== selectedId) {
       setParams({ aula: selectedId }, { replace: true });
     }
   }, [params, selectedId, setParams]);
 
-  // Guarda a última aula acessada.
   useEffect(() => {
     if (enrollment && enrollment.lastLessonId !== selectedId) {
       saveEnrollment({
@@ -84,7 +76,6 @@ export function useCourseStudy(course: CourseDetailDto) {
     }
   }, [enrollment, selectedId]);
 
-  // Ao trocar de aula, volta ao topo do conteúdo.
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, [selectedId]);

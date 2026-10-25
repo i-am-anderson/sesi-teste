@@ -32,8 +32,8 @@ export type StudyItem = {
   label: string;
 };
 
-export const studyPath = (courseId: number, lessonId?: string) =>
-  `/curso/${courseId}/estudar${lessonId ? `?aula=${lessonId}` : ""}`;
+export const studyPath = (slug: string, lessonId?: string) =>
+  `/curso/${slug}/estudar${lessonId ? `?aula=${lessonId}` : ""}`;
 
 const lowerFirst = (text: string) => text.charAt(0).toLowerCase() + text.slice(1);
 const minutesLabel = (n: number) => `${n} ${n === 1 ? "minuto" : "minutos"}`;

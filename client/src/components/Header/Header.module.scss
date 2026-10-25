@@ -7,7 +7,6 @@
   color: $color-white;
   background: transparent;
   transition: background-color $transition, color $transition, box-shadow $transition;
-  border-bottom: 1px solid $color-white;
 }
 
 .scrolled {
@@ -53,4 +52,10 @@
   &:hover {
     opacity: 1;
   }
+}
+
+.account span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }

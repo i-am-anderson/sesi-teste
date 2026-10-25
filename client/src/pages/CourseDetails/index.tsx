@@ -31,8 +31,8 @@ export default function CourseDetailsPage() {
     isError,
   } = useQuery({
     queryKey: ["courses", slug],
-    queryFn: () => getCourse(slug ?? ""),
-    enabled: typeof slug === "string" && slug.length > 0,
+    queryFn: () => getCourse(slug!),
+    enabled: !!slug,
   });
 
   const enrollment = useEnrollment(slug ?? "");
@@ -43,7 +43,7 @@ export default function CourseDetailsPage() {
       : course.status === "ComingSoon"
         ? "Em breve"
         : "Matricule-se",
-    href: studyPath(course.id),
+    href: studyPath(course.slug),
     disabled: course.status === "ComingSoon" && !enrollment,
   };
 

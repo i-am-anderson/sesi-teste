@@ -1,11 +1,13 @@
+import { Link } from "react-router-dom";
+import { User } from "lucide-react";
 import Container from "../Container/Container";
 import Button from "../Button/Button";
 import { useScrolled } from "../../hooks/useScrolled";
+import { useAuth } from "../../hooks/useAuth";
 import { navigation, studentArea } from "../../data/navigation";
 import logoWhite from "../../assets/icons/logo-sesi-industria-white.svg";
 import logoPrimary from "../../assets/icons/logo-sesi-industria-primary.svg";
 import styles from "./Header.module.scss";
-import { Link } from "react-router-dom";
 
 type HeaderProps = {
   solid?: boolean;
@@ -13,6 +15,7 @@ type HeaderProps = {
 
 export default function Header({ solid = false }: HeaderProps) {
   const scrolled = useScrolled(0) || solid;
+  const { student } = useAuth();
 
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
@@ -43,9 +46,11 @@ export default function Header({ solid = false }: HeaderProps) {
           <Button
             href={studentArea.href}
             size="sm"
+            className={styles.account}
             variant={scrolled ? "outline" : "outlineLight"}
           >
-            {studentArea.label}
+            {student && <User size={16} aria-hidden="true" />}
+            {student ? student.name.split(" ")[0] : studentArea.label}
           </Button>
         </nav>
       </Container>

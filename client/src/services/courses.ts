@@ -6,12 +6,11 @@ async function get<T>(path: string): Promise<T> {
   return response.json() as Promise<T>;
 }
 
-// Todos os cursos disponíveis, paginados
 export type CourseDto = {
   id: number;
+  slug: string;
   fullName: string;
   shortName: string;
-  slug: string;
   description: string;
   category: { id: number; name: string };
   modality: "Online" | "InPerson";
@@ -22,32 +21,6 @@ export type CourseDto = {
   availableFrom: string | null;
 };
 
-export type PagedResponse<T> = {
-  total: number;
-  page: number;
-  pageSize: number;
-  totalPages: number;
-  items: T[];
-};
-
-export function getCourses(
-  pageSize = 12,
-  page = 1,
-  filters: CourseFilters = {},
-) {
-  const params = new URLSearchParams({
-    pageSize: String(pageSize),
-    page: String(page),
-  });
-
-  Object.entries(filters).forEach(([key, value]) => {
-    if (value) params.set(key, value);
-  });
-
-  return get<PagedResponse<CourseDto>>(`/api/courses?${params}`);
-}
-
-// Detalhes de um curso específico, incluindo tópicos e aulas
 export type LessonDto = {
   id: number;
   order: number;
@@ -66,11 +39,14 @@ export type TopicDto = {
 
 export type CourseDetailDto = CourseDto & { topics: TopicDto[] };
 
-export function getCourse(slug: string) {
-  return get<CourseDetailDto>(`/api/courses/${slug}`);
-}
+export type PagedResponse<T> = {
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+  items: T[];
+};
 
-// Filtros disponíveis para cursos
 export type CourseFilters = {
   search?: string;
   categoryId?: string;
@@ -84,6 +60,20 @@ export type CourseFiltersOptions = {
   statuses: CourseDto["status"][];
 };
 
+export function getCourses(pageSize = 12, page = 1, filters: CourseFilters = {}) {
+  const params = new URLSearchParams({ pageSize: String(pageSize), page: String(page) });
+
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value) params.set(key, value);
+  });
+
+  return get<PagedResponse<CourseDto>>(`/api/courses?${params}`);
+}
+
 export function getCourseFilters() {
   return get<CourseFiltersOptions>("/api/courses/filters");
+}
+
+export function getCourse(slug: string) {
+  return get<CourseDetailDto>(`/api/courses/${slug}`);
 }
