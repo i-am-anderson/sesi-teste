@@ -16,3 +16,36 @@ export { default as TestimonialsSection } from "./TestimonialsSection/Testimonia
 export { default as CtaSection } from "./CtaSection/CtaSection";
 export { default as Footer } from "./Footer/Footer";
 export { default as NotFound } from "./NotFound/NotFound";
+export { default as CategoryTag } from "./CategoryTag/CategoryTag";
+export { default as CourseHero } from "./CourseHero/CourseHero";
+export { default as CourseFeatures } from "./CourseFeatures/CourseFeatures";
+export { default as Accordion } from "./Accordion/Accordion";
+export { default as AccordionSection } from "./AccordionSection/AccordionSection";
+export {
+  ModulesList,
+  TextSections,
+  FaqList,
+} from "./CourseContent/CourseContent";
+export { default as EnrollBar } from "./EnrollBar/EnrollBar";
+export { default as ContactCtaSection } from "./ContactCtaSection/ContactCtaSection";
+export { default as FeatureList } from "./FeatureList/FeatureList";
+export { default as VLibras } from "./VLibras/VLibras";
+export { default as Input } from "./Input/Input";
+export { default as Select } from "./Select/Select";
+export { default as Drawer } from "./Drawer/Drawer";
+export {
+  default as CourseFilters,
+  type FilterValues,
+} from "./CourseFilters/CourseFilters";
+export { default as CourseCardSkeleton } from "./CourseCard/CourseCardSkeleton";
+export { default as Textarea } from "./Textarea/Textarea";
+export { default as VideoSection } from "./VideoSection/VideoSection";
+export { default as SplitSection } from "./SplitSection/SplitSection";
+export { default as ContactSection } from "./ContactSection/ContactSection";
+export { default as StudyLayout } from "./StudyLayout/StudyLayout";
+export { default as CourseMenu } from "./CourseMenu/CourseMenu";
+export { default as LessonContent } from "./LessonContent/LessonContent";
+export { default as ProfileCard } from "./ProfileCard/ProfileCard";
+export { default as EnrolledCourseCard } from "./EnrolledCourseCard/EnrolledCourseCard";
+export { default as CertificateList } from "./CertificateList/CertificateList";
+export { default as Tabs } from "./Tabs/Tabs";

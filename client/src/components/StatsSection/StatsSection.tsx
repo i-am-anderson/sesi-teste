@@ -1,6 +1,8 @@
 import Container from "../Container/Container";
 import SectionHeading from "../SectionHeading/SectionHeading";
-import { stats, features } from "../../data/stats";
+import FeatureList from "../FeatureList/FeatureList";
+import { stats } from "../../data/stats";
+import { features } from "../../data/features";
 import styles from "./StatsSection.module.scss";
 
 type StatItemProps = {
@@ -8,27 +10,11 @@ type StatItemProps = {
   label: string;
 };
 
-type FeatureItemProps = {
-  icon: string;
-  title: string;
-  description: string;
-};
-
 export function StatItem({ value, label }: StatItemProps) {
   return (
     <li className={styles.stat}>
       <span className={styles.value}>{value}</span>
       <span className={styles.label}>{label}</span>
-    </li>
-  );
-}
-
-export function FeatureItem({ icon, title, description }: FeatureItemProps) {
-  return (
-    <li className={styles.feature}>
-      <img src={icon} alt="" width="48" height="48" />
-      <h3 className={styles.featureTitle}>{title}</h3>
-      <p className={styles.featureText}>{description}</p>
     </li>
   );
 }
@@ -49,11 +35,11 @@ export default function StatsSection() {
             ))}
           </ul>
 
-          <ul className={styles.features}>
-            {features.map((item) => (
-              <FeatureItem key={item.title} {...item} />
-            ))}
-          </ul>
+          <FeatureList
+            items={features.slice(0, 3)}
+            columns={3}
+            className={styles.features}
+          />
         </div>
       </Container>
     </section>

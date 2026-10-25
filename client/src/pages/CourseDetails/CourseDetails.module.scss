@@ -1,0 +1,11 @@
+@use '../../styles/theme' as *;
+
+.main {
+  min-height: 100vh;
+}
+
+.loading {
+  padding: 144px 0 72px; // 72px do header fixo + respiro
+  font-size: 18px;
+  color: $color-muted;
+}

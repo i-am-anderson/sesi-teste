@@ -1,0 +1,45 @@
+@use '../../styles/theme' as *;
+
+.modules,
+.stack {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.text {
+  font-size: 16px;
+  line-height: 1.5;
+  color: $color-muted;
+}
+
+.bullets {
+  margin-top: 2px;
+
+  li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: $color-muted;
+
+    &::before {
+      content: '•';
+      position: absolute;
+      left: 6px;
+    }
+  }
+}
+
+.spaced {
+  margin: 16px 0;
+}

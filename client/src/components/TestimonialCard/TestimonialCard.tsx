@@ -6,6 +6,7 @@ type TestimonialCardProps = {
   name: string;
   role: string;
   rating?: number;
+  variant?: "red" | "light";
 };
 
 export default function TestimonialCard({
@@ -13,9 +14,10 @@ export default function TestimonialCard({
   name,
   role,
   rating = 5,
+  variant = "red",
 }: TestimonialCardProps) {
   return (
-    <figure className={styles.card}>
+    <figure className={`${styles.card} ${styles[variant]}`}>
       <blockquote className={styles.quote}>{quote}</blockquote>
       <figcaption className={styles.author}>
         <strong className={styles.name}>{name}</strong>

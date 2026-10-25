@@ -1,0 +1,127 @@
+@use '../../styles/theme' as *;
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  background: $color-white;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  @include focus-ring;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  color: $color-white;
+  background: $color-red-950;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.search {
+  padding: 16px 24px 8px;
+}
+
+// Só a lista rola: o cabeçalho do menu fica sempre visível.
+.list {
+  flex: 1;
+  min-height: 0;
+  padding: 8px 0 24px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.empty {
+  padding: 16px 24px;
+  color: $color-muted;
+  font-size: 14px;
+}
+
+.module {
+  padding-top: 16px;
+}
+
+.moduleTitle {
+  padding: 0 24px 8px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: $color-muted;
+}
+
+.lesson {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 24px;
+  font-size: 15px;
+  line-height: 1.35;
+  border-left: 4px solid transparent;
+  transition: background-color $transition;
+  @include focus-ring;
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  &:is(a):hover {
+    background: #f6f6f6;
+  }
+}
+
+.current {
+  font-weight: 700;
+  border-left-color: $color-primary;
+  background: #fbeeee;
+}
+
+.disabled {
+  color: #9a9a9d;
+  cursor: not-allowed;
+}
+
+.completed {
+  color: #1f8a4c;
+}
+
+.unlocked {
+  color: $color-ink;
+}
+
+.locked {
+  color: #9a9a9d;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

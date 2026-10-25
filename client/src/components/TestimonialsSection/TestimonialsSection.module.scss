@@ -1,12 +1,20 @@
-@use '../../styles/theme' as *;
+@use "../../styles/theme" as *;
 
 .section {
   padding: 72px 0 72px;
-  color: $color-white;
-  background: $color-red-900;
-  border-top: 1px solid rgba($color-primary, 0.5);
 
   > :first-child {
     margin-bottom: 32px;
   }
+}
+
+.red {
+  color: $color-white;
+  background: $color-red-900;
+  border-top: 1px solid rgba($color-primary, 0.5);
+}
+
+.sand {
+  color: $color-ink;
+  background: #fcd19c;
 }

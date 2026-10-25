@@ -1,0 +1,91 @@
+@use '../../styles/theme' as *;
+
+.drawer {
+  width: min(400px, 100%);
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0 auto 0 0; // à esquerda
+  padding: 0;
+  border: 0;
+  color: $color-ink;
+  background: $color-white;
+
+  &[open] {
+    animation: slide-in 0.25s ease;
+  }
+
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid $color-line;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  transition: background-color $transition;
+  @include focus-ring;
+
+  &:hover {
+    background: rgba(128, 128, 128, 0.14);
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.flush {
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.footer {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid $color-line;
+
+  > :is(a, button) {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+}

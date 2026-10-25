@@ -1,0 +1,25 @@
+@use '../../styles/theme' as *;
+
+.main {
+  min-height: 100vh;
+  padding: 144px 0 72px; // 72px do header fixo + respiro
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 480px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+
+  > :first-child,
+  > :nth-child(2) {
+    align-self: stretch;
+  }
+}
