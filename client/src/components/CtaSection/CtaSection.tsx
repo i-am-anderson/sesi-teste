@@ -1,5 +1,7 @@
 import Container from "../Container/Container";
 import Button from "../Button/Button";
+import VideoPlayer from "../VideoPlayer/VideoPlayer";
+import { INSTITUTIONAL_VIDEO_URL } from "../../data/video";
 import thumb from "../../assets/images/video-thumb.png";
 import styles from "./CtaSection.module.scss";
 
@@ -8,6 +10,7 @@ export default function CtaSection({
   description = "Junte-se a milhares de profissionais que já estão transformando a indústria através dos nossos cursos. Invista no seu futuro hoje mesmo!",
   cta = { label: "Matricule-se", href: "#" },
   image = thumb,
+  videoUrl = INSTITUTIONAL_VIDEO_URL,
 }) {
   return (
     <section className={styles.section}>
@@ -20,9 +23,7 @@ export default function CtaSection({
           </Button>
         </div>
 
-        <a href="#" className={styles.media} aria-label="Assistir ao vídeo">
-          <img src={image} alt="" />
-        </a>
+        <VideoPlayer url={videoUrl} image={image} title={title} className={styles.media} />
       </Container>
     </section>
   );

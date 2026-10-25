@@ -8,15 +8,19 @@ type DrawerProps = {
   title: string;
   children: ReactNode;
   footer?: ReactNode;
-  /** Corpo sem padding/gap (para conteúdo que cuida do próprio layout). */
   flush?: boolean;
+  side?: "left" | "right";
 };
 
-/**
- * Barra lateral sobre o <dialog> nativo: foco preso, Esc para fechar
- * e role/aria-modal já vêm do navegador.
- */
-export default function Drawer({ open, onClose, title, children, footer, flush = false }: DrawerProps) {
+export default function Drawer({
+  open,
+  onClose,
+  title,
+  children,
+  footer,
+  flush = false,
+  side = "left",
+}: DrawerProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
 
@@ -40,7 +44,7 @@ export default function Drawer({ open, onClose, title, children, footer, flush =
   return (
     <dialog
       ref={dialogRef}
-      className={styles.drawer}
+      className={`${styles.drawer} ${side === "right" ? styles.right : ""}`}
       aria-labelledby={titleId}
       onClose={onClose}
       onClick={(event) => {
@@ -53,12 +57,19 @@ export default function Drawer({ open, onClose, title, children, footer, flush =
           <h2 id={titleId} className={styles.title}>
             {title}
           </h2>
-          <button type="button" className={styles.close} onClick={onClose} aria-label="Fechar">
+          <button
+            type="button"
+            className={styles.close}
+            onClick={onClose}
+            aria-label="Fechar"
+          >
             <X size={24} aria-hidden="true" />
           </button>
         </header>
 
-        <div className={`${styles.body} ${flush ? styles.flush : ""}`}>{children}</div>
+        <div className={`${styles.body} ${flush ? styles.flush : ""}`}>
+          {children}
+        </div>
 
         {footer && <footer className={styles.footer}>{footer}</footer>}
       </div>

@@ -45,7 +45,7 @@ export default function LoginPage() {
               name="email"
               type="email"
               autoComplete="email"
-              defaultValue="mariana.souza@email.com"
+              defaultValue="joao.silva@email.com"
               required
             />
             <Input

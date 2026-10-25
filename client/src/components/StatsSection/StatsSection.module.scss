@@ -29,14 +29,14 @@
 }
 
 .value {
-  font-size: clamp(44px, 5vw, 64px);
+  font-size: clamp(2.75rem, 5vw, 4rem);
   font-weight: 600;
   line-height: 1.15;
   letter-spacing: -0.01em;
 }
 
 .label {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
   text-align: right;
 }

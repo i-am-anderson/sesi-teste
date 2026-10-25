@@ -44,7 +44,7 @@
 
 .title {
   max-width: 460px;
-  font-size: clamp(44px, 6vw, 76px);
+  font-size: clamp(2.75rem, 6vw, 4.75rem);
   font-weight: 700;
   line-height: 1.07;
   letter-spacing: -0.02em;
@@ -53,6 +53,6 @@
 .description {
   max-width: 520px;
   margin: 28px 0 24px;
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 1.45;
 }

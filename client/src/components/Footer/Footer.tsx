@@ -1,5 +1,13 @@
+import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import Container from "../Container/Container";
-import { contact, footerColumns } from "../../data/footer";
+import { getCourses } from "../../services/courses";
+import {
+  contact,
+  footerNavigation,
+  footerSupport,
+  POPULAR_COURSES_COUNT,
+} from "../../data/footer";
 import logoWhite from "../../assets/icons/logo-sesi-industria-white.svg";
 import logoSesi from "../../assets/icons/logo-sesi.svg";
 import iconLinkedin from "../../assets/icons/icon-linkedIn-24px.svg";
@@ -23,6 +31,9 @@ type FooterColumnProps = {
   links: FooterLink[];
 };
 
+/** "/cursos" é rota interna (Link); "#" e links externos continuam <a>. */
+const isInternal = (href: string) => href.startsWith("/") && !href.startsWith("//");
+
 export function FooterColumn({ title, links }: FooterColumnProps) {
   return (
     <div>
@@ -30,13 +41,62 @@ export function FooterColumn({ title, links }: FooterColumnProps) {
       <ul className={styles.links}>
         {links.map((link) => (
           <li key={link.label}>
-            <a href={link.href} className={styles.link}>
-              {link.label}
-            </a>
+            {isInternal(link.href) ? (
+              <Link to={link.href} className={styles.link}>
+                {link.label}
+              </Link>
+            ) : (
+              <a href={link.href} className={styles.link}>
+                {link.label}
+              </a>
+            )}
           </li>
         ))}
       </ul>
     </div>
+  );
+}
+
+/** Coluna "Cursos populares", vinda da API. */
+function PopularCoursesColumn() {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["popularCourses"],
+    queryFn: () => getCourses(POPULAR_COURSES_COUNT),
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const title = "Cursos populares";
+
+  if (isLoading) {
+    return (
+      <div aria-busy="true">
+        <h3 className={styles.columnTitle}>{title}</h3>
+        <ul className={styles.links} aria-label="Carregando cursos">
+          {Array.from({ length: POPULAR_COURSES_COUNT }, (_, i) => (
+            <li key={i} className={styles.skeleton} aria-hidden="true" />
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
+  if (isError || !data) {
+    return (
+      <div>
+        <h3 className={styles.columnTitle}>{title}</h3>
+        <p className={styles.message}>Não foi possível carregar os cursos.</p>
+      </div>
+    );
+  }
+
+  return (
+    <FooterColumn
+      title={title}
+      links={data.items.map((course) => ({
+        label: course.fullName,
+        href: `/curso/${course.slug}`,
+      }))}
+    />
   );
 }
 
@@ -51,9 +111,9 @@ export default function Footer() {
             <p className={styles.contact}>{contact.address}</p>
           </div>
 
-          {footerColumns.map((column) => (
-            <FooterColumn key={column.title} {...column} />
-          ))}
+          <FooterColumn {...footerNavigation} />
+          <PopularCoursesColumn />
+          <FooterColumn {...footerSupport} />
         </div>
 
         <div className={styles.bottom}>

@@ -31,19 +31,19 @@
 
 .eyebrow {
   margin-bottom: 8px;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   color: $color-muted;
 }
 
 .heading {
   margin-bottom: 24px;
-  font-size: 40px;
+  font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.15;
 
   @include down($bp-md) {
-    font-size: 30px;
+    font-size: 1.875rem;
   }
 }
 
@@ -52,12 +52,12 @@
   flex-direction: column;
   gap: 16px;
   margin-bottom: 32px;
-  font-size: 17px;
+  font-size: 1.0625rem;
   line-height: 1.6;
 }
 
 .subheading {
-  font-size: 26px;
+  font-size: 1.625rem;
   font-weight: 700;
   line-height: 1.2;
 }
@@ -74,7 +74,7 @@
 }
 
 .done {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 700;
   color: #1f8a4c;
 }

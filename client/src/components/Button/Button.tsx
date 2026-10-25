@@ -3,8 +3,12 @@ import type {
   ButtonHTMLAttributes,
   ReactNode,
 } from "react";
+import { Link } from "react-router-dom";
 import ArrowIcon from "../ArrowIcon/ArrowIcon";
 import styles from "./Button.module.scss";
+
+const isInternal = (href: string) =>
+  href.startsWith("/") && !href.startsWith("//");
 
 type CommonProps = {
   variant?: "light" | "dark" | "outline" | "outlineLight";
@@ -20,7 +24,6 @@ type ButtonProps = CommonProps &
     | ({ as: "button" } & ButtonHTMLAttributes<HTMLButtonElement>)
   );
 
-/** Link (padrão) ou <button> nativo (as="button") com o mesmo visual. */
 export default function Button({
   as = "a",
   variant = "light",
@@ -55,6 +58,14 @@ export default function Button({
 
   const { href = "#", ...anchorRest } =
     rest as AnchorHTMLAttributes<HTMLAnchorElement>;
+
+  if (isInternal(href)) {
+    return (
+      <Link to={href} className={classes} {...anchorRest}>
+        {content}
+      </Link>
+    );
+  }
 
   return (
     <a href={href} className={classes} {...anchorRest}>

@@ -13,7 +13,7 @@
   align-items: center;
   gap: 8px;
   padding: 16px 24px;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   @include focus-ring;
 }
@@ -28,7 +28,7 @@
 }
 
 .eyebrow {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -36,7 +36,7 @@
 }
 
 .title {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.25;
 }
@@ -45,7 +45,6 @@
   padding: 16px 24px 8px;
 }
 
-// Só a lista rola: o cabeçalho do menu fica sempre visível.
 .list {
   flex: 1;
   min-height: 0;
@@ -57,7 +56,7 @@
 .empty {
   padding: 16px 24px;
   color: $color-muted;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .module {
@@ -66,7 +65,7 @@
 
 .moduleTitle {
   padding: 0 24px 8px;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -78,7 +77,7 @@
   align-items: flex-start;
   gap: 12px;
   padding: 10px 24px;
-  font-size: 15px;
+  font-size: 0.9375rem;
   line-height: 1.35;
   border-left: 4px solid transparent;
   transition: background-color $transition;

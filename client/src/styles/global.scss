@@ -22,7 +22,7 @@ html {
 body {
   margin: 0;
   font-family: $font-family;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.5;
   color: $color-ink;
   background: $color-white;
@@ -64,4 +64,35 @@ button {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }
+}
+
+// Acessibilidade
+html[data-a11y-spacing="medium"] body * {
+  line-height: 1.6 !important;
+  letter-spacing: 0.04em !important;
+  word-spacing: 0.08em !important;
+}
+
+html[data-a11y-spacing="large"] body * {
+  line-height: 1.9 !important;
+  letter-spacing: 0.08em !important;
+  word-spacing: 0.16em !important;
+}
+
+html[data-a11y-motion="reduce"] {
+  scroll-behavior: auto !important;
+}
+
+html[data-a11y-motion="reduce"] *,
+html[data-a11y-motion="reduce"] *::before,
+html[data-a11y-motion="reduce"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+html[data-a11y-contrast="high"] a:not([class*="button"]) {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }

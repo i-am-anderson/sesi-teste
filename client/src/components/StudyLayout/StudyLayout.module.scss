@@ -44,7 +44,7 @@ $sidebar-w: 360px;
   border: 1px solid $color-ink;
   border-radius: $radius-sm;
   background: $color-white;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   @include focus-ring;
 }
@@ -53,7 +53,6 @@ $sidebar-w: 360px;
   min-height: 100vh;
 }
 
-// O Drawer só existe no mobile; no desktop o menu já está na lateral.
 .mobileOnly {
   @media (min-width: $bp-lg) {
     display: none;

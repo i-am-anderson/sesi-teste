@@ -39,7 +39,7 @@ export default function CoursesSection({
         }
         extraSlide={<AllCoursesCard href="/cursos" />}
         footerStart={
-          <Button href="/cursos" variant="outline" size="sm">
+          <Button as="a" href="/cursos" variant="outline" size="sm">
             Ver todos os cursos
           </Button>
         }

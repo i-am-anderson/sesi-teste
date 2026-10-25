@@ -1,4 +1,4 @@
-@use "../../styles/theme" as *;
+@use '../../styles/theme' as *;
 
 .list {
   display: flex;
@@ -14,12 +14,10 @@
   border: 0;
   border-bottom: 3px solid transparent;
   background: transparent;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
   color: $color-muted;
-  transition:
-    color $transition,
-    border-color $transition;
+  transition: color $transition, border-color $transition;
   @include focus-ring;
 
   &:focus-visible {

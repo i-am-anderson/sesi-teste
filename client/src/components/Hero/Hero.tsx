@@ -6,7 +6,7 @@ import styles from "./Hero.module.scss";
 export default function Hero({
   title = "Impulsione sua carreira na indústria",
   description = "Amplie seus conhecimentos com excelência na melhor plataforma de estudos da indústria brasileira",
-  cta = { label: "Conhecer cursos", href: "#" },
+  cta = { label: "Conhecer cursos", href: "/cursos" },
   image = heroImage,
 }) {
   return (
@@ -17,7 +17,7 @@ export default function Hero({
       <Container className={styles.content}>
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.description}>{description}</p>
-        <Button href={cta.href} withArrow>
+        <Button as="a" href={cta.href} withArrow>
           {cta.label}
         </Button>
       </Container>

@@ -49,3 +49,5 @@ export { default as ProfileCard } from "./ProfileCard/ProfileCard";
 export { default as EnrolledCourseCard } from "./EnrolledCourseCard/EnrolledCourseCard";
 export { default as CertificateList } from "./CertificateList/CertificateList";
 export { default as Tabs } from "./Tabs/Tabs";
+export { default as VideoPlayer } from "./VideoPlayer/VideoPlayer";
+export { default as Accessibility } from "./Accessibility/Accessibility";

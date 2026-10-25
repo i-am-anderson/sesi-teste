@@ -1,4 +1,4 @@
-@use '../../styles/theme' as *;
+@use "../../styles/theme" as *;
 
 .drawer {
   width: min(400px, 100%);
@@ -20,6 +20,18 @@
   }
 }
 
+.right {
+  margin: 0 0 0 auto;
+
+  &[open] {
+    animation: slide-in-right 0.25s ease;
+  }
+
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.2);
+  }
+}
+
 .panel {
   display: flex;
   flex-direction: column;
@@ -35,7 +47,7 @@
 }
 
 .title {
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 700;
   line-height: 1.2;
 }
@@ -87,5 +99,11 @@
 @keyframes slide-in {
   from {
     transform: translateX(-100%);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
   }
 }

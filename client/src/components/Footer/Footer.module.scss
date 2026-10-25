@@ -27,7 +27,7 @@
 }
 
 .contact {
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1.4;
 
   &:first-of-type {
@@ -41,7 +41,7 @@
 
 .columnTitle {
   margin-bottom: 12px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 600;
   line-height: 1.4;
   text-transform: uppercase;
@@ -55,7 +55,7 @@
 }
 
 .link {
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1.4;
   color: rgba($color-white, 0.6);
   transition: color $transition;
@@ -78,7 +78,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: rgba($color-white, 0.6);
 }
 
@@ -90,4 +90,27 @@
 .social {
   display: block;
   @include focus-ring;
+}
+
+.message {
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+.skeleton {
+  height: 20px;
+  padding: 3px 0; 
+  background: rgba($color-white, 0.18);
+  background-clip: content-box;
+  animation: footer-pulse 1.2s ease-in-out infinite;
+
+  &:nth-child(odd) {
+    width: 85%;
+  }
+}
+
+@keyframes footer-pulse {
+  50% {
+    opacity: 0.45;
+  }
 }
