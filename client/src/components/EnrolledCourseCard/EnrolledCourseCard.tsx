@@ -6,10 +6,15 @@ import styles from "./EnrolledCourseCard.module.scss";
 
 const formatDate = (iso: string) => new Date(iso).toLocaleDateString("pt-BR");
 
-export default function EnrolledCourseCard({ enrollment }: { enrollment: Enrollment }) {
-  const { slug, title, imageUrl, progress, completedAt, lastLessonId } = enrollment;
+export default function EnrolledCourseCard({
+  enrollment,
+}: {
+  enrollment: Enrollment;
+}) {
+  const { slug, title, imageUrl, progress, completedAt, lastLessonSlug } =
+    enrollment;
   const done = completedAt !== null;
-  const href = studyPath(slug, lastLessonId ?? undefined);
+  const href = studyPath(slug, lastLessonSlug ?? undefined);
 
   return (
     <article className={styles.card}>
@@ -22,7 +27,11 @@ export default function EnrolledCourseCard({ enrollment }: { enrollment: Enrollm
             ? `Concluído em ${formatDate(completedAt)}`
             : `${progress.completed} de ${progress.total} aulas concluídas`}
         </p>
-        <ProgressBar value={progress.percent} label={`Progresso em ${title}`} tone="red" />
+        <ProgressBar
+          value={progress.percent}
+          label={`Progresso em ${title}`}
+          tone="red"
+        />
 
         <div className={styles.actions}>
           <Button href={href} size="sm" variant="dark" withArrow={!done}>

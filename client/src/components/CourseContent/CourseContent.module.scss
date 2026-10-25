@@ -1,4 +1,4 @@
-@use '../../styles/theme' as *;
+@use "../../styles/theme" as *;
 
 .modules,
 .stack {
@@ -33,7 +33,7 @@
     color: $color-muted;
 
     &::before {
-      content: '•';
+      content: "•";
       position: absolute;
       left: 6px;
     }
@@ -42,4 +42,16 @@
 
 .spaced {
   margin: 16px 0;
+}
+
+.moduleMeta {
+  margin-bottom: 4px;
+  font-size: 0.875rem;
+  color: $color-muted;
+}
+
+.duration {
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0.8;
 }

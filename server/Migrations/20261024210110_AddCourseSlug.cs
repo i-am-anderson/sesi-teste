@@ -10,9 +10,6 @@ namespace SesiTeste.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            // Faz o Truncate para evitar problemas com a criação do índice único na coluna Slug, caso já existam cursos cadastrados.
-            migrationBuilder.Sql("TRUNCATE TABLE lessons, topics, courses, categories RESTART IDENTITY CASCADE;");
-
             migrationBuilder.AddColumn<string>(
                 name: "Slug",
                 table: "courses",

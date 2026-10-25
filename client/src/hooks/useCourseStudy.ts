@@ -26,23 +26,30 @@ export function useCourseStudy(course: CourseDetailDto) {
     [curriculum, completed],
   );
 
-  const currentIndex = items.findIndex((item) => !completed.has(item.lesson.id));
+  const currentIndex = items.findIndex(
+    (item) => !completed.has(item.lesson.id),
+  );
   const unlockedUntil = currentIndex === -1 ? items.length - 1 : currentIndex;
 
-  const requestedIndex = items.findIndex((item) => item.lesson.id === params.get("aula"));
-  const lastIndex = items.findIndex((item) => item.lesson.id === enrollment?.lastLessonId);
+  const requestedIndex = items.findIndex(
+    (item) => item.lesson.slug === params.get("aula"),
+  );
+  const lastIndex = items.findIndex(
+    (item) => item.lesson.slug === enrollment?.lastLessonSlug,
+  );
 
   let selectedIndex: number;
   if (requestedIndex !== -1 && requestedIndex <= unlockedUntil) {
-    selectedIndex = requestedIndex; 
+    selectedIndex = requestedIndex;
   } else if (currentIndex !== -1) {
-    selectedIndex = currentIndex;
+    selectedIndex = currentIndex; // continua de onde parou
   } else {
     selectedIndex = Math.max(lastIndex, 0);
   }
 
   const selected = items[selectedIndex];
   const selectedId = selected.lesson.id;
+  const selectedSlug = selected.lesson.slug;
 
   useEffect(() => {
     if (readStudent().enrollments[course.slug]) return;
@@ -54,27 +61,27 @@ export function useCourseStudy(course: CourseDetailDto) {
       enrolledAt: now,
       updatedAt: now,
       completedAt: null,
-      lastLessonId: null,
+      lastLessonSlug: null,
       completedLessonIds: [],
       progress: computeProgress(curriculum, []),
     });
   }, [course, curriculum]);
 
   useEffect(() => {
-    if (params.get("aula") !== selectedId) {
-      setParams({ aula: selectedId }, { replace: true });
+    if (params.get("aula") !== selectedSlug) {
+      setParams({ aula: selectedSlug }, { replace: true });
     }
-  }, [params, selectedId, setParams]);
+  }, [params, selectedSlug, setParams]);
 
   useEffect(() => {
-    if (enrollment && enrollment.lastLessonId !== selectedId) {
+    if (enrollment && enrollment.lastLessonSlug !== selectedSlug) {
       saveEnrollment({
         ...enrollment,
-        lastLessonId: selectedId,
+        lastLessonSlug: selectedSlug,
         updatedAt: new Date().toISOString(),
       });
     }
-  }, [enrollment, selectedId]);
+  }, [enrollment, selectedSlug]);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -103,7 +110,9 @@ export function useCourseStudy(course: CourseDetailDto) {
 
   const getStatus = (lessonId: string): LessonStatus => {
     if (completed.has(lessonId)) return "completed";
-    return (indexById.get(lessonId) ?? Infinity) <= unlockedUntil ? "unlocked" : "locked";
+    return (indexById.get(lessonId) ?? Infinity) <= unlockedUntil
+      ? "unlocked"
+      : "locked";
   };
 
   return {

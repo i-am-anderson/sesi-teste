@@ -22,7 +22,7 @@ export type Enrollment = {
   enrolledAt: string;
   updatedAt: string;
   completedAt: string | null;
-  lastLessonId: string | null;
+  lastLessonSlug: string | null;
   completedLessonIds: string[];
   progress: CourseProgress;
 };

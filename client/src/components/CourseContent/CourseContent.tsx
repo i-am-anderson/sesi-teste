@@ -1,4 +1,5 @@
 import type { TopicDto } from "../../services/courses";
+import { formatDuration } from "../../data/courses";
 import type { TextSection } from "../../data/courseInfo";
 import styles from "./CourseContent.module.scss";
 
@@ -7,20 +8,38 @@ export function ModulesList({ topics }: { topics: TopicDto[] }) {
     <ol className={styles.modules}>
       {[...topics]
         .sort((a, b) => a.order - b.order)
-        .map((topic) => (
-          <li key={topic.id}>
-            <h4 className={styles.subtitle}>
-              {topic.order}. {topic.title}
-            </h4>
-            <ul className={styles.bullets}>
-              {[...topic.lessons]
-                .sort((a, b) => a.order - b.order)
-                .map((lesson) => (
-                  <li key={lesson.id}>{lesson.title}</li>
-                ))}
-            </ul>
-          </li>
-        ))}
+        .map((topic) => {
+          const minutes = topic.lessons.reduce(
+            (sum, lesson) => sum + lesson.durationMinutes,
+            0,
+          );
+          const count = topic.lessons.length;
+
+          return (
+            <li key={topic.id}>
+              <h4 className={styles.subtitle}>
+                {topic.order}. {topic.title}
+              </h4>
+              <p className={styles.moduleMeta}>
+                {count} {count === 1 ? "aula" : "aulas"} ·{" "}
+                {formatDuration(minutes)}
+              </p>
+              <ul className={styles.bullets}>
+                {[...topic.lessons]
+                  .sort((a, b) => a.order - b.order)
+                  .map((lesson) => (
+                    <li key={lesson.id}>
+                      {lesson.title}
+                      <span className={styles.duration}>
+                        {" "}
+                        · {formatDuration(lesson.durationMinutes)}
+                      </span>
+                    </li>
+                  ))}
+              </ul>
+            </li>
+          );
+        })}
     </ol>
   );
 }

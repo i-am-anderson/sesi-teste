@@ -125,7 +125,7 @@ export default function CourseMenu({
                       </span>
                     ) : (
                       <Link
-                        to={studyPath(slug, lesson.id)}
+                        to={studyPath(slug, lesson.slug)}
                         className={`${styles.lesson} ${lesson.id === selectedId ? styles.current : ""}`}
                         aria-current={
                           lesson.id === selectedId ? "page" : undefined

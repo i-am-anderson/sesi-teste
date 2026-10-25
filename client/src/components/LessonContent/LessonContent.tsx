@@ -56,7 +56,7 @@ export default function LessonContent({
           )}
 
           {isCompleted && nextItem && (
-            <Button href={studyPath(slug, nextItem.lesson.id)} variant="dark" withArrow>
+            <Button href={studyPath(slug, nextItem.lesson.slug)} variant="dark" withArrow>
               Próxima aula
             </Button>
           )}

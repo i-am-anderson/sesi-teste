@@ -5,7 +5,7 @@ GET {{SesiTeste_HostAddress}}/health/
 Accept: application/json
 
 ### Retorna todos os cursos (padrão pageSize=12, page=1)
-GET {{SesiTeste_HostAddress}}/api/courses&pageSize=2&page=1
+GET {{SesiTeste_HostAddress}}/api/courses?pageSize=2&page=1
 
 ### Busca cursos por palavra-chave (padrão pageSize=12, page=1)
 GET {{SesiTeste_HostAddress}}/api/courses?search=python&pageSize=2&page=1

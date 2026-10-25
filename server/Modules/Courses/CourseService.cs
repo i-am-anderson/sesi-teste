@@ -1,10 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 using SesiTeste.Shared.Data;
+using System.Globalization;
+using System.Text;
 
 namespace SesiTeste.Modules.Courses;
 
 public class CourseService(AppDbContext db) : ICourseService
 {
+    // Método auxiliar para remover acentos de uma string (usado para a busca)
+    private static string RemoveAccents(string text)
+    {
+        var decomposed = text.Normalize(NormalizationForm.FormD);
+        var clean = decomposed.Where(ch => CharUnicodeInfo.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark);
+        return new string(clean.ToArray()).Normalize(NormalizationForm.FormC);
+    }
+
     // Método para obter a lista de cursos com filtros e paginação
     public async Task<CourseListResponse> GetAllAsync(CourseQuery q)
     {
@@ -12,10 +22,10 @@ public class CourseService(AppDbContext db) : ICourseService
 
         if (!string.IsNullOrWhiteSpace(q.Search))
         {
-            var term = $"%{q.Search.Trim()}%";
+            var term = $"%{RemoveAccents(q.Search.Trim())}%";
             query = query.Where(c =>
-                EF.Functions.ILike(c.FullName, term) ||
-                EF.Functions.ILike(c.ShortName, term));
+                EF.Functions.ILike(AppDbContext.Unaccent(c.FullName), term) ||
+                EF.Functions.ILike(AppDbContext.Unaccent(c.ShortName), term));
         }
 
         if (q.CategoryId is not null) query = query.Where(c => c.CategoryId == q.CategoryId);

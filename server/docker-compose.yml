@@ -1,9 +1,7 @@
-version: "3.9"
-
 services:
   postgres:
     image: postgres:16
-    container_name: courseapi
+    container_name: sesiteste
     restart: unless-stopped
 
     environment:
@@ -15,13 +13,13 @@ services:
       - "5434:5432"
 
     volumes:
-      - courseapi_data:/var/lib/postgresql/data
+      - sesiteste_data:/var/lib/postgresql/data
 
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d appdb"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d default"]
       interval: 10s
       timeout: 5s
       retries: 5
 
 volumes:
-  courseapi_data:
+  sesiteste_data:

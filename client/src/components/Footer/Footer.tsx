@@ -93,7 +93,7 @@ function PopularCoursesColumn() {
     <FooterColumn
       title={title}
       links={data.items.map((course) => ({
-        label: course.fullName,
+        label: course.shortName,
         href: `/curso/${course.slug}`,
       }))}
     />

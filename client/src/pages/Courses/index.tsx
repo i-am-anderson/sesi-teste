@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { LoaderCircle, Search } from "lucide-react";
@@ -73,6 +74,15 @@ export default function CoursesPage() {
     }),
   });
 
+  const hasActiveFilters =
+    Boolean(search) || Object.values(values).some(Boolean);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const clearAll = () => {
+    formRef.current?.reset();
+    updateParams({ search: "", ...EMPTY_FILTERS });
+  };
+
   const sentinelRef = useInfiniteScroll(
     () => void fetchNextPage(),
     Boolean(hasNextPage) && !isFetchingNextPage && !isError,
@@ -95,6 +105,7 @@ export default function CoursesPage() {
 
           <div className={styles.toolbar}>
             <form
+              ref={formRef}
               role="search"
               className={styles.search}
               onSubmit={(event) => {
@@ -104,7 +115,7 @@ export default function CoursesPage() {
               }}
             >
               <Input
-                key={search} // mantém o campo em sincronia com a URL (ex.: botão voltar)
+                key={search}
                 name="search"
                 type="search"
                 label="Buscar cursos"
@@ -117,6 +128,11 @@ export default function CoursesPage() {
               <Button as="button" type="submit" variant="dark">
                 Buscar
               </Button>
+              {hasActiveFilters && (
+                <Button as="button" variant="outline" onClick={clearAll}>
+                  Limpar
+                </Button>
+              )}
             </form>
 
             <CourseFilters
@@ -148,11 +164,7 @@ export default function CoursesPage() {
           {isEmpty && (
             <div className={styles.message}>
               <p>Nenhum curso encontrado para essa busca.</p>
-              <Button
-                as="button"
-                variant="outline"
-                onClick={() => updateParams({ search: "", ...EMPTY_FILTERS })}
-              >
+              <Button as="button" variant="outline" onClick={clearAll}>
                 Limpar busca e filtros
               </Button>
             </div>

@@ -1,5 +1,8 @@
 import type { CourseDetailDto, TopicDto } from "../services/courses";
-import type { CourseProgress, ModuleProgress } from "../services/studentStorage";
+import type {
+  CourseProgress,
+  ModuleProgress,
+} from "../services/studentStorage";
 import { modalityLabels } from "./courses";
 
 export type LessonSection = {
@@ -10,9 +13,8 @@ export type LessonSection = {
 
 export type StudyLesson = {
   id: string;
-  /** Nome no menu lateral. */
+  slug: string;
   title: string;
-  /** Título (h1) da aula. */
   heading: string;
   sections: LessonSection[];
 };
@@ -28,19 +30,31 @@ export type StudyItem = {
   module: StudyModule;
   moduleIndex: number;
   lessonIndex: number;
-  /** Numeração exibida no menu, ex.: "2.3". */
   label: string;
 };
 
-export const studyPath = (slug: string, lessonId?: string) =>
-  `/curso/${slug}/estudar${lessonId ? `?aula=${lessonId}` : ""}`;
+export const studyPath = (slug: string, lessonSlug?: string) =>
+  `/curso/${slug}/estudar${lessonSlug ? `?aula=${lessonSlug}` : ""}`;
 
-const lowerFirst = (text: string) => text.charAt(0).toLowerCase() + text.slice(1);
+export function slugify(text: string): string {
+  return (
+    text
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 60)
+      .replace(/-+$/, "") || "aula"
+  );
+}
+
+const lowerFirst = (text: string) =>
+  text.charAt(0).toLowerCase() + text.slice(1);
 const minutesLabel = (n: number) => `${n} ${n === 1 ? "minuto" : "minutos"}`;
 const percentOf = (done: number, total: number) =>
   total ? Math.round((done / total) * 100) : 0;
 
-/** Módulo fixo que todo curso tem: Introdução, Boas práticas e Extras. */
 function buildIntroModule(course: CourseDetailDto): StudyModule {
   const name = course.shortName;
 
@@ -50,6 +64,7 @@ function buildIntroModule(course: CourseDetailDto): StudyModule {
     lessons: [
       {
         id: "intro-introducao",
+        slug: "introducao",
         title: "Introdução",
         heading: "Introdução",
         sections: [
@@ -70,6 +85,7 @@ function buildIntroModule(course: CourseDetailDto): StudyModule {
       },
       {
         id: "intro-boas-praticas",
+        slug: "boas-praticas",
         title: "Boas práticas",
         heading: "Boas práticas",
         sections: [
@@ -93,6 +109,7 @@ function buildIntroModule(course: CourseDetailDto): StudyModule {
       },
       {
         id: "intro-extras",
+        slug: "extras",
         title: "Extras",
         heading: "Extras",
         sections: [
@@ -120,27 +137,36 @@ function buildIntroModule(course: CourseDetailDto): StudyModule {
   };
 }
 
-/** Módulo vindo da API: uma introdução do módulo + as aulas dele. */
 function buildTopicModule(topic: TopicDto): StudyModule {
   const lessons = [...topic.lessons].sort((a, b) => a.order - b.order);
-  const totalMinutes = lessons.reduce((sum, lesson) => sum + lesson.durationMinutes, 0);
+  const totalMinutes = lessons.reduce(
+    (sum, lesson) => sum + lesson.durationMinutes,
+    0,
+  );
   const moduleId = `t${topic.id}`;
 
   const intro: StudyLesson = {
     id: `${moduleId}-intro`,
+    slug: "introducao",
     title: "Introdução",
     heading: topic.title,
     sections: [
       {
         paragraphs: [
-          topic.description ?? `Neste módulo você vai estudar ${lowerFirst(topic.title)}.`,
+          topic.description ??
+            `Neste módulo você vai estudar ${lowerFirst(topic.title)}.`,
           lessons.length
             ? `O módulo reúne ${lessons.length} ${lessons.length === 1 ? "aula" : "aulas"}, com cerca de ${minutesLabel(totalMinutes)} de conteúdo.`
             : "As aulas deste módulo serão disponibilizadas em breve.",
         ],
       },
       ...(lessons.length
-        ? [{ title: "O que você vai ver", bullets: lessons.map((lesson) => lesson.title) }]
+        ? [
+            {
+              title: "O que você vai ver",
+              bullets: lessons.map((lesson) => lesson.title),
+            },
+          ]
         : []),
     ],
   };
@@ -152,12 +178,14 @@ function buildTopicModule(topic: TopicDto): StudyModule {
       intro,
       ...lessons.map((lesson) => ({
         id: `${moduleId}-l${lesson.id}`,
+        slug: slugify(lesson.title),
         title: lesson.title,
         heading: lesson.title,
         sections: [
           {
             paragraphs: [
-              lesson.description ?? `Nesta aula você vai estudar ${lowerFirst(lesson.title)}.`,
+              lesson.description ??
+                `Nesta aula você vai estudar ${lowerFirst(lesson.title)}.`,
               `Duração estimada: ${minutesLabel(lesson.durationMinutes)}.`,
             ],
           },
@@ -175,7 +203,19 @@ function buildTopicModule(topic: TopicDto): StudyModule {
 
 export function buildCurriculum(course: CourseDetailDto): StudyModule[] {
   const topics = [...course.topics].sort((a, b) => a.order - b.order);
-  return [buildIntroModule(course), ...topics.map(buildTopicModule)];
+  const modules = [buildIntroModule(course), ...topics.map(buildTopicModule)];
+
+  // Slug único por curso
+  const used = new Set<string>();
+  return modules.map((module) => ({
+    ...module,
+    lessons: module.lessons.map((lesson) => {
+      let slug = lesson.slug;
+      for (let n = 2; used.has(slug); n++) slug = `${lesson.slug}-${n}`;
+      used.add(slug);
+      return { ...lesson, slug };
+    }),
+  }));
 }
 
 /** Todas as aulas em ordem, com módulo e numeração. */
@@ -201,7 +241,9 @@ export function computeProgress(
   let total = 0;
 
   for (const module of curriculum) {
-    const moduleDone = module.lessons.filter((lesson) => done.has(lesson.id)).length;
+    const moduleDone = module.lessons.filter((lesson) =>
+      done.has(lesson.id),
+    ).length;
     modules[module.id] = {
       title: module.title,
       completed: moduleDone,

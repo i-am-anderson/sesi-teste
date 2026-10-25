@@ -1,4 +1,4 @@
-@use '../../styles/theme' as *;
+@use "../../styles/theme" as *;
 
 .hero {
   padding: 112px 0 64px; // 72px do header fixo + respiro
@@ -28,6 +28,12 @@
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.01em;
+}
+
+.audience {
+  margin-top: 12px;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 .meta {

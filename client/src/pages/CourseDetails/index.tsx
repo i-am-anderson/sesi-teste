@@ -68,6 +68,9 @@ export default function CourseDetailsPage() {
               category={categoryById[course.category.id]}
               status={course.status}
               startDate={course.availableFrom}
+              workloadHours={course.workloadHours}
+              audience={course.targetAudience}
+              modality={course.modality}
               cta={cta}
             />
             <CourseFeatures />
