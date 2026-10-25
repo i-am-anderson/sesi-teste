@@ -1,4 +1,4 @@
-@use '../../styles/theme' as *;
+@use "../../styles/theme" as *;
 
 .header {
   position: fixed;
@@ -6,7 +6,10 @@
   z-index: 100;
   color: $color-white;
   background: transparent;
-  transition: background-color $transition, color $transition, box-shadow $transition;
+  transition:
+    background-color $transition,
+    color $transition,
+    box-shadow $transition;
   border-bottom: 1px solid $color-white;
 }
 
@@ -59,4 +62,43 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+}
+
+.desktopOnly {
+  @include down($bp-md) {
+    display: none;
+  }
+}
+
+.menuButton {
+  display: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: $radius-sm;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  @include focus-ring;
+
+  @include down($bp-md) {
+    display: grid;
+  }
+}
+
+.mobileLinks {
+  display: flex;
+  flex-direction: column;
+  margin: -8px 0;
+}
+
+.mobileLink {
+  display: block;
+  padding: 14px 0;
+  border-bottom: 1px solid $color-line;
+  font-size: 1.125rem;
+  font-weight: 600;
+  @include focus-ring;
 }
