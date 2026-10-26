@@ -90,7 +90,7 @@ Registro do uso de IA no desenvolvimento do projeto SESI Indústria — Platafor
 
 ## 5. Um exemplo de erro ou inadequação identificado
 
-- **Contexto:** foi pedido o ambiente de estudo do curso, com matrícula, progresso salvo no navegador e acesso restrito a quem fez login (simulado).
+- **Contexto:** foi pedido readequação no ambiente de estudo do curso (com matrícula, progresso salvo no navegador e acesso restrito) a quem fez login simulado.
 - **O que a IA gerou:** a página de estudo matriculava o aluno automaticamente na primeira visita ao curso. A proteção por login estava no componente de rota (`ProtectedRoute`), mas a rota de estudo não estava dentro dele.
 - **Problema identificado:** um visitante deslogado que clicava em "Matricule-se" era matriculado e entrava no ambiente de estudo sem passar pela tela de login. O curso ficava salvo no `localStorage` sem existir um aluno.
 - **Como foi percebido:** em teste manual, navegando deslogado pelo detalhe de um curso e clicando em "Matricule-se". A IA não havia testado esse caminho, só o fluxo de quem já estava logado.
