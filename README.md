@@ -599,7 +599,6 @@ Cada `push` na branch configurada dispara um novo deploy do serviço corresponde
 - A régua de leitura é pensada para mouse/teclado.
 - O VLibras e o vídeo do YouTube dependem de serviços externos e de conexão; sem eles, não aparecem.
 - Não há _skip link_ ("pular para o conteúdo"), e a conformidade com a WCAG não foi auditada com ferramentas automáticas nem com leitores de tela reais.
-- Os testes visuais foram feitos principalmente em Chromium (viewports de celular e desktop); não houve validação em Safari, Firefox e dispositivos físicos.
 
 **Qualidade e operação**
 
