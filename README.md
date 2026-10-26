@@ -209,14 +209,14 @@ VITE_API_URL=http://localhost:5116
 
 ## 6. Configuração do banco
 
-- **Imagem:** PostgreSQL 17 pelo `docker-compose.yml`, na porta **5434** do host (para não conflitar com um Postgres local na 5432).
+- **Imagem:** PostgreSQL 17 pelo `docker-compose.yml`, na porta **5434** do host.
 - **Credenciais de desenvolvimento** (`appsettings.Development.json`):
 
 ```
 Host=localhost;Port=5434;Database=default;Username=postgres;Password=postgres
 ```
 
-- **Em outros ambientes** (ex.: Railway), informe a conexão por variável de ambiente:
+- **Em outros ambientes** (ex.: Railway), feita a conexão por variável de ambiente:
 
 ```
 ConnectionStrings__Default=Host=...;Port=5432;Database=...;Username=...;Password=...
@@ -491,7 +491,7 @@ A aplicação está publicada no **[Railway](https://railway.com)**, em um únic
 | Parte          | Serviço no Railway                                 | URL                                            |
 | -------------- | -------------------------------------------------- | ---------------------------------------------- |
 | Front-end      | `client` (repositório GitHub, diretório `client/`) | https://client-production-4d57.up.railway.app/ |
-| API            | `server` (repositório GitHub, diretório `server/`) | _(preencher)_                                  |
+| API            | `server` (repositório GitHub, diretório `server/`) | https://server-production-49c8.up.railway.app/health |
 | Banco de dados | `Postgres` (com volume `postgres-volume`)          | Rede interna do projeto (sem acesso público)   |
 
 ```mermaid
